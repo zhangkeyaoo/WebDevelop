@@ -8,71 +8,90 @@
     
 } */
 
-/* 导航栏样式 */  
+/* 导航栏样式 */
 
-.navbar {  
-    width:100%;
-    height:50px;
-    position:fixed; 
-    top:0;
-    left:0;
-    z-index:99;
-    display: flex;  
-    justify-content: space-between;  
-    align-items: center;  
-    background-color: #8785a2;  
-    padding: 8px 5px;  
-  }  
-  
-  .navbar-brand a {  
-    color: white;  
-    text-decoration: none;  
-    font-size: 20px;  
-    font-weight: 550;
-  }  
-  .navbar-search input {  
-    width: 250px;
-    padding: 10px;  
-    border:#f6f6f6;  
-    border-radius: 60px;  
-    margin-right: 20px;  
-  }  
-  
-  .navbar-links {  
-    list-style: none;  
-    display: flex;  
-    font-weight: 600;
-  }  
-  
-  .navbar-links li {  
-    margin: 0 30px;  
-    font-weight: 600;
-  }  
-  
-  .navbar-links li a {  
-    color: white;  
-    text-decoration: none;  
-    font-size: 20px;  
-    font-weight: 600;
-  }  
-  
-  .navbar-login {  
-    display: flex;  
-    align-items: center;  
-    font-weight: 600;
-  }  
-  
-  .navbar-login a {  
-    color: #f6f6f6;  
-    text-decoration: none;  
-    font-size: 20px;  
-    margin-left: 33px;  
-    font-weight: 600;
-  }
+.navbar {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #8785a2;
+  padding: 8px 5px;
+}
+
+.navbar-brand-img {
+  position: fixed;
+  top: 5px;
+  height: 50px;
+  width: 50px;
+  left: 30px;
+}
+
+.navbar-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 550;
+  left: 80px;
+  position: fixed;
+  top: 15px;
+  font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
+}
+
+.navbar-search input {
+  width: 250px;
+  padding: 10px;
+  border: #f6f6f6;
+  border-radius: 60px;
+  margin-right: 20px;
+  font-size: 16px;
+  font-family: "Font2","Microsoft JhengHei", Arial, sans-serif;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  font-weight: 600;
+  font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
+}
+
+.navbar-links li {
+  margin: 0 30px;
+  font-weight: 600;
+}
+
+.navbar-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.navbar-login {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.navbar-login a {
+  color: #f6f6f6;
+  text-decoration: none;
+  font-size: 20px;
+  margin-left: 33px;
+  font-weight: 600;
+}
 
 .search {
-    background-image: url('src/assets/search.png');
-    background-repeat: no-repeat;
-    background-size: 30px;
-    background-position: 95%,50%;
+  background-image: url('src/assets/search.png');
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: 95%, 50%;
+}
+.welcome{
+  font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
 }

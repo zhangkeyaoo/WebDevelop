@@ -1,83 +1,158 @@
-.login{
-    width: 40%;
+@font-face {  
+    font-family: 'Font1'; 
+    src: url('src/assets/font1.ttf'); 
+    font-weight: normal;
+    font-style: normal;
+  } 
+  @font-face {  
+    font-family: 'Font2'; 
+    src: url('src/assets/font2.ttf'); 
+    font-weight: normal;
+    font-style: normal;
+  } 
+  @font-face {  
+    font-family: 'Font3'; 
+    src: url('src/assets/font3.ttf'); 
+    font-weight: normal;
+    font-style: normal;
+  } 
+
+.login {
+    width: 41%;
     height: 100%;
     top: 0px;
     left: 30%;
     position: fixed;
     background: linear-gradient(to top, #FF9D7E 0%, #b9bbdf 100%);
 }
-.head{
+
+.bordered-div {  
+    border: 3px solid #b9bbdf; 
+    border-radius: 20px; 
+    border-style: groove;
+    margin: 9px;
+    padding: 0px; /* 内边距，可选 */  
+    position: fixed;
+    width: 40%;
+    height: 97%;
+    top: 0px;
+    left: 30%;
+  }
+.head {
     font-size: 30px;
     margin-top: 100px;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
 }
-.login-name {  
-    position: relative; /* 设置为相对定位,内部元素可绝对定位 */  
-}  
-  
-.input-with-icon {  
+
+.login-name {
     position: relative;
-    display: inline-block; 
-}  
-  
-.input-icon1 {  
-    position: absolute; /* 绝对定位 */  
+    /* 设置为相对定位,内部元素可绝对定位 */
+}
+
+.input-with-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.input-icon1 {
+    position: absolute;
+    /* 绝对定位 */
     left: 110px;
-    top: 50%;   
-    transform: translateY(-50%); /* 向上移动自身高度的一半，实现垂直居中 */  
-    width: 30px; 
-    height: 30px; 
-}  
-.input-icon2 {  
-    position: absolute; /* 绝对定位 */  
+    top: 50%;
+    transform: translateY(-50%);
+    /* 向上移动自身高度的一半，实现垂直居中 */
+    width: 30px;
+    height: 30px;
+}
+
+.input-icon2 {
+    position: absolute;
+    /* 绝对定位 */
     left: 110px;
-    top: 42.5%;   
-    transform: translateY(-50%); /* 向上移动自身高度的一半，实现垂直居中 */  
-    width: 30px; 
-    height: 30px; 
-}  
-.username ,.password {
+    top: 42.5%;
+    transform: translateY(-50%);
+    /* 向上移动自身高度的一半，实现垂直居中 */
+    width: 30px;
+    height: 30px;
+}
+
+.username,
+.password {
     margin-left: 40px;
     width: 250px;
-    height: 20px; 
-    padding: 8px; 
-    font-size: 16px;   
-    border: 1px solid #ccc;  
-    border-radius: 5px; 
+    height: 20px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     margin-bottom: 20px;
     margin-top: 20px;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
 }
-.login-button-style{
+
+.login-button-style {
     width: 140px;
     height: 60px;
     font-size: 20px;
-    cursor: pointer; 
-    background-color: #cd8787;  
-    color: white;  
-    border: none;  
-    padding: 10px 20px;  
-    cursor: pointer;  
+    cursor: pointer;
+    background-color: #cd8787;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
     margin-top: 40px;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
 }
 
-.left-content {  
-    /* 使用Flexbox来垂直排列内容 */  
-    display: flex;  
-    flex-direction: column; /* 垂直方向排列子元素 */  
+.left-content {
+    /* 使用Flexbox来垂直排列内容 */
+    display: flex;
+    flex-direction: column;
+    /* 垂直方向排列子元素 */
     width: 27%;
     padding: 20px;
-    position: absolute;  
-    left: 0;  
-    top: 0;  
+    position: absolute;
+    left: 0;
+    top: 0;
     bottom: 0;
     background: linear-gradient(to top, #FF9D7E 0%, #b9bbdf 100%);
 }
 
-.sentence {  
-
+.sentence {
     margin-bottom: 50px;
-}  
-  
-.welcome-image {  
-    width: 100%; 
-    height: auto; 
+    font-size: 34px;
+    font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
+}
+
+.welcome-image {
+    width: 100%;
+    height: auto;
+}
+.right-content{
+    background: linear-gradient(to top, #FF9D7E 0%, #b9bbdf 100%);
+    display: flex;
+    position: fixed;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    width: 29%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.calling1{
+    font-size: 25px;
+    font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
+}
+.calling2{
+    font-size: 19px;
+    text-align: left;
+    margin-left: 10px;
+    font-family: "Font2","Microsoft JhengHei", Arial, sans-serif;
+}
+.calling3{
+    font-size: 19px;
+    text-align: left;
+    margin-left: 10px;
+    font-family: "Font2","Microsoft JhengHei", Arial, sans-serif;
 }

@@ -4,19 +4,33 @@
   padding: 0;  
   box-sizing: border-box;  
 }   */
+@font-face {  
+  font-family: 'Font1'; 
+  src: url('src/assets/font1.ttf'); 
+  font-weight: normal;
+  font-style: normal;
+} 
+@font-face {  
+  font-family: 'Font2'; 
+  src: url('src/assets/font2.ttf'); 
+  font-weight: normal;
+  font-style: normal;
+} 
+@font-face {  
+  font-family: 'Font3'; 
+  src: url('src/assets/font3.ttf'); 
+  font-weight: normal;
+  font-style: normal;
+} 
 
-body {  
-  font-family: "HYLeMiaoTi","Microsoft JhengHei", Arial, sans-serif;  
-}  
-
-
-
-#root{
+#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  
 }
+
 /* 
 .logo {
   height: 6em;
@@ -52,6 +66,5 @@ body {
 }
 
 .read-the-docs {
-  color: hwb(200 33% 11%);
+  color: hwb(99 33% 11%);
 }
-
