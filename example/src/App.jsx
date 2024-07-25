@@ -1,31 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import React, { Component } from "react"
+import { useNavigate } from 'react-router-dom'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const navigate=useNavigate()
   return (
     <>
+      <nav className='apppage'>
 
-      {/* 
-      <div className="card">
-        <p>
-        <button > 好友列表 </button>
-        </p> */}
-      {/* <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button> */}
-      {/* <p>
-          联系作者 <b>1652046628@qq.com</b>
-        </p> */}
-      {/* </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more you are <b>dongdongzhu</b>
-      </p> */}
+        <div className="card">
+          <p>
+            <button > 好友列表 </button>
+          </p>
+          <button onClick={() => setCount((count) => count + 1)}>
+            count is {count}
+          </button>
+        </div>
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more you are <b>dongdongzhu</b>
+        </p>
+      </nav> 
     </>
+  
+    
+      
   )
-}
+  };  
+    
 
 export default App

@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<Head />} />
         <Route path="/login" element={<Userlogin />} />
+        <Route path="/apppage" element={< App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

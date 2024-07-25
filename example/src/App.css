@@ -23,6 +23,7 @@
   font-style: normal;
 } 
 
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -31,7 +32,7 @@
   
 }
 
-/* 
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -53,13 +54,13 @@
     transform: rotate(360deg);
   }
 }
-旋转图标 */
 
-/* @media (prefers-reduced-motion: no-preference) {
+
+ @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-} */
+} 
 
 .card {
   padding: 2em;
@@ -67,4 +68,4 @@
 
 .read-the-docs {
   color: hwb(99 33% 11%);
-}
+} 
