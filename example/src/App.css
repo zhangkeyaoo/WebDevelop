@@ -1,9 +1,3 @@
-/* 基本的重置样式  
-* {  
-  margin: 0;  
-  padding: 0;  
-  box-sizing: border-box;  
-}   */
 @font-face {  
   font-family: 'Font1'; 
   src: url('src/assets/font1.ttf'); 
@@ -22,30 +16,7 @@
   font-weight: normal;
   font-style: normal;
 } 
-
-
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  
-}
-
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #902d0faa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
+/* 
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -55,17 +26,60 @@
   }
 }
 
-
  @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-} 
+}  */
 
-.card {
-  padding: 2em;
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 160px; 
+  background-color: #f0f0f0; 
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
 
-.read-the-docs {
-  color: hwb(99 33% 11%);
-} 
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px; /* 与下方内容的间距 */
+}
+
+.user-nickname, button {
+  margin-bottom: 10px; /* 元素间距 */
+}
+.nickname-container {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+  gap: 5px; /* 昵称和图片之间的间隔 */
+}
+.change-icon1{
+position: relative;
+   cursor: pointer;
+    width: 15px;
+    height: 15px;
+    top: 6px;
+}
+.change-icon1:hover {
+  transform: scale(1.2);
+}
+.change-icon2 {
+  position: absolute;
+  bottom: 20px;
+  right: 5px;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+.change-icon2:hover {
+  transform: scale(1.2);
+}

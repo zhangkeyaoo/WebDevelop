@@ -1,137 +1,162 @@
-@font-face {  
-    font-family: 'Font1'; 
-    src: url('src/assets/font1.ttf'); 
-    font-weight: normal;
-    font-style: normal;
-  } 
-  @font-face {  
-    font-family: 'Font2'; 
-    src: url('src/assets/font2.ttf'); 
-    font-weight: normal;
-    font-style: normal;
-  } 
-  @font-face {  
-    font-family: 'Font3'; 
-    src: url('src/assets/font3.ttf'); 
-    font-weight: normal;
-    font-style: normal;
-  } 
+@font-face {
+  font-family: 'Font1';
+  src: url('src/assets/font1.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Font2';
+  src: url('src/assets/font2.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Font3';
+  src: url('src/assets/font3.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .login {
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0;
+  position: fixed;
 
 }
-.background {  
-    position: relative;  
-    width: 100%; 
-    height:100% ;
-    background-image: url('src/assets/log-background.png'); /* 替换为你的背景图URL */  
-    background-size: cover;  
-    background-repeat: no-repeat;  
-    background-position: center center; /* 或者其他你需要的值 */ 
-  }  
-  .back-image {
-    width: 40px;
-    height: auto;
-    left: 15px;
-    top: 15px;
-    position: fixed;
-}
-.back-image:hover {  
-    /* 鼠标悬停时的样式 */  
-    transform: scale(1.2);
-  }
 
-.bordered-div {  
-    background-color: rgba(255, 255, 255, 0.4); /* 半透明黑色蒙版，你可以根据需要调整颜色和透明度 */  
-    border: 8px solid #b9bbdf; 
-    border-radius: 30px; 
-    border-style: outset;
-    margin: 9px;
-    position: fixed;
-    width: 36%;
-    top: 5%;
-    bottom: 5%;
-    left: 5%;
-  }
+.background {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/log-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.back-image {
+  width: 40px;
+  height: auto;
+  left: 15px;
+  top: 15px;
+  position: fixed;
+}
+
+.back-image:hover {
+  /* 鼠标悬停时的样式 */
+  transform: scale(1.2);
+}
+
+.bordered-div {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 8px solid #b9bbdf;
+  border-radius: 30px;
+  border-style: outset;
+  margin: 9px;
+  position: fixed;
+  width: 36%;
+  top: 5%;
+  bottom: 5%;
+  left: 5%;
+}
+
 .head {
-    font-size: 30px;
-    margin-top: 100px;
-    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
-    text-align: center;
+  font-size: 30px;
+  margin-top: 100px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+  text-align: center;
 }
 
 .login-name {
-    position: relative;
-    /* 设置为相对定位,内部元素可绝对定位 */
+  position: relative;
+  /* 设置为相对定位,内部元素可绝对定位 */
 }
 
 .input-with-icon {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .input-icon1 {
-    position: absolute;
-    /* 绝对定位 */
-    left: 80px;
-    top: 50%;
-    transform: translateY(-50%);
-    /* 向上移动自身高度的一半，实现垂直居中 */
-    width: 30px;
-    height: 30px;
-    text-align: center;
+  position: absolute;
+  /* 绝对定位 */
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* 向上移动自身高度的一半，实现垂直居中 */
+  width: 30px;
+  height: 30px;
+  text-align: center;
 }
 
 .input-icon2 {
-    position: absolute;
-    /* 绝对定位 */
-    left: 80px;
-    top: 49%;
-    transform: translateY(-50%);
-    /* 向上移动自身高度的一半，实现垂直居中 */
-    width: 30px;
-    height: 30px;
-    text-align: center;
+  position: absolute;
+  /* 绝对定位 */
+  left: 80px;
+  top: 49%;
+  transform: translateY(-50%);
+  /* 向上移动自身高度的一半，实现垂直居中 */
+  width: 30px;
+  height: 30px;
+  text-align: center;
 }
+
 .login-name,
-.login-password{
-    text-align: center;
+.login-password {
+  text-align: center;
 }
+
 .username,
 .password {
-    margin-left: 40px;
-    width: 250px;
-    height: 20px;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
+  margin-left: 40px;
+  width: 250px;
+  height: 20px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
-.login-button{
-    text-align: center;
+
+.login-button {
+  text-align: center;
 }
+
 .login-button-style {
-    width: 140px;
-    height: 60px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #cd8787;
-    color: white;
-    border: none;
-    
-    cursor: pointer;
-    margin-top: 40px;
-    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
+  width: 140px;
+  height: 60px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #cd8787;
+  color: white;
+  border: none;
+
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
-  .login-button-style:hover {  
-    /* 鼠标悬停时的样式 */  
-    transform: scale(0.9);
-  }
+
+.login-button-style:hover {
+  transform: scale(0.9);
+}
+
+.sentence {
+  text-align: center;
+  margin: 10px auto;
+  color: #333;
+  z-index: 1000;
+  position: absolute;
+  top: 80%;
+  left: 60%;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  border-radius: 50px;
+  font-family: "Font1", "Microsoft JhengHei", Arial, sans-serif;
+  font-size: 24px;
+}

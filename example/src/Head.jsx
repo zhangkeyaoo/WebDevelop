@@ -26,6 +26,15 @@ function Head() {
 
     return (
         <>
+        <div className="fixed-text-box">
+                <p>热爱探店的美食家、追求美学的设计师、探索宇宙的天文迷、<br/>
+                记录生活的摄影师、钟爱音乐的发烧友……<br/>
+                无论你是谁，"小鼠兴趣圈"都是你展现真我、遇见同好的精彩平台。<br/>
+                我们鼓励自由表达与知识共享，让每个独特的你找到归属感。<br/>
+                        在这里，每一点击都引领心灵之旅，每回交流或遇挚友。<br/>
+                        加入我们，启程跨界兴趣之旅，点亮精彩生活！<br/>
+                        联系作者1652046628@qq.com</p>
+            </div>
            <div className="background-slider" style={{ backgroundImage: `url(${currentImage})` }}>
                 <nav className="navbar">
                     <div className="navbar-brand">
@@ -46,8 +55,6 @@ function Head() {
                         </li>
                     </ul>
                 </nav >
-                {/* <div><h1 className="welcome">Hi! 欢迎来到小鼠兴趣圈</h1></div>
-                <div><h1 className="conUS">联系作者1652046628@qq.com</h1></div> */}
             </div>
         </>
 
