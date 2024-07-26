@@ -43,44 +43,58 @@ function App() {
   const goToMessagesPage = () => {
     navigate('/messages')
   }
+  // 跳转到圈子页面
+  const goToCirclePage = () => {
+    navigate('/circle')
+  }
   return (
     <>
-      <nav className='apppage'>
-        <div className="user-info">
-          <div style={{ position: 'relative', display: 'inline-block' }}>
-            <img src={avatar} alt="用户头像" className='user-avatar' />
-            <img
-              src="src/assets/change2.png"
-              alt="修改头像"
-              className="change-icon2"
-              onClick={triggerFileInput}
-            />
-            <input type="file" 
-            ref={avatarInputRef} 
-            style={{ display: 'none' }} 
-            onChange={handleAvatarChange} />
-          </div>
-          <div className="nickname-container">
-            <p alt="用户昵称"
-              className="user-nickname"
-              style={{ marginRight: '5px' }}>{nickname}</p>
-            <img src="src/assets/change1.png"
-              alt="修改昵称"
-              onClick={toggleEditing}
-              className="change-icon1" />
-          </div>
-          {isEditing && (
-            <input type="text" 
-            value={nickname} 
-            onChange={handleNicknameChange} 
-            onBlur={toggleEditing} 
-            autoFocus />
-          )}
 
-          <button onClick={goToHomePage}>主页</button>
-          <button onClick={goToMessagesPage}>消息</button>
-        </div>
+      <nav className='apppage'>
+        <div className="app-background">  </div>
+          <nav className="app-navbar">
+            <button>热门新鲜事</button>
+            <button onClick={goToCirclePage}>我的圈子</button>
+            <input type="text" placeholder="搜索感兴趣的内容" className="app-search-input" />
+          </nav>
+          <div className="user-info">
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <img src={avatar} alt="用户头像" className='user-avatar' />
+              <img
+                src="src/assets/change2.png"
+                alt="修改头像"
+                className="change-icon2"
+                onClick={triggerFileInput}
+              />
+              <input type="file"
+                ref={avatarInputRef}
+                style={{ display: 'none' }}
+                onChange={handleAvatarChange} />
+            </div>
+            <div className="nickname-container">
+              <p alt="用户昵称"
+                className="user-nickname"
+                style={{ marginRight: '5px' }}>{nickname}</p>
+              <img src="src/assets/change1.png"
+                alt="修改昵称"
+                onClick={toggleEditing}
+                className="change-icon1" />
+            </div>
+            {isEditing && (
+              <input type="text"
+                value={nickname}
+                onChange={handleNicknameChange}
+                onBlur={toggleEditing}
+                autoFocus />
+            )}
+            <div className='user-info-button'>
+              <button onClick={goToHomePage}>主页</button>
+              <button onClick={goToMessagesPage}>消息</button>
+            </div>
+          </div>
+
       </nav>
+
     </>
   )
 };

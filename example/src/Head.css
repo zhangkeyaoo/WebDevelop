@@ -102,12 +102,7 @@
 .help:hover {  
   transform: scale(1.15);
 }
-.search {
-  background-image: url('src/assets/search.png');
-  background-repeat: no-repeat;
-  background-size: 30px;
-  background-position: 95%, 50%;
-}
+
 .welcome{
   font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
   text-align: center;

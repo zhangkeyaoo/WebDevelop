@@ -1,49 +1,51 @@
-@font-face {  
-  font-family: 'Font1'; 
-  src: url('src/assets/font1.ttf'); 
+@font-face {
+  font-family: 'Font1';
+  src: url('src/assets/font/font1.ttf');
   font-weight: normal;
   font-style: normal;
-} 
-@font-face {  
-  font-family: 'Font2'; 
-  src: url('src/assets/font2.ttf'); 
-  font-weight: normal;
-  font-style: normal;
-} 
-@font-face {  
-  font-family: 'Font3'; 
-  src: url('src/assets/font3.ttf'); 
-  font-weight: normal;
-  font-style: normal;
-} 
-/* 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
- @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}  */
+@font-face {
+  font-family: 'Font2';
+  src: url('src/assets/font/font2.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Font3';
+  src: url('src/assets/font/font3.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.app-background {
+  position:fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/app/app-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: -1000;
+}
 
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:10px;
+  text-align: center;
+  gap: 10px;
   padding: 20px;
   position: fixed;
   left: 0;
   top: 0;
-  height: 100%;
-  width: 160px; 
-  background-color: #f0f0f0; 
+  height: 60%;
+  width: 10%;
+  z-index: 10;
+  /* 在最上层 */
+  background-color: #f0f0f0bc;
   font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
 
@@ -51,27 +53,46 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  margin-bottom: 20px; /* 与下方内容的间距 */
+  margin-bottom: 20px;
+  /* 与下方内容的间距 */
 }
 
-.user-nickname, button {
-  margin-bottom: 10px; /* 元素间距 */
+.user-nickname,
+button {
+  margin-bottom: 10px;
+  /* 元素间距 */
+  display: inline-block;
+  z-index: 10;
+  position: relative;
 }
+
+.user-info-button :hover {
+  transform: scale(0.9);
+  background-color: #ffead9;
+
+}
+
 .nickname-container {
   display: flex;
-  align-items: center; /* 垂直居中对齐 */
-  gap: 5px; /* 昵称和图片之间的间隔 */
+  align-items: center;
+  /* 垂直居中对齐 */
+  gap: 5px;
+  /* 昵称和图片之间的间隔 */
 }
-.change-icon1{
-position: relative;
-   cursor: pointer;
-    width: 15px;
-    height: 15px;
-    top: 6px;
+
+.change-icon1 {
+  position: relative;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  top: 6px;
+  z-index: 10;
 }
+
 .change-icon1:hover {
   transform: scale(1.2);
 }
+
 .change-icon2 {
   position: absolute;
   bottom: 20px;
@@ -80,6 +101,54 @@ position: relative;
   width: 15px;
   height: 15px;
 }
+
 .change-icon2:hover {
   transform: scale(1.2);
 }
+
+.app-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position:fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  background-color: #f8f9faa7;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.app-navbar button {
+  margin: 0 15px;
+  padding: 10px 20px;
+  background-color: #f0b97a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+  font-size: 20px;
+  z-index: 10;
+}
+
+.app-navbar button:hover {
+  background-color: #fd9138;
+  transform: scale(0.9);
+}
+
+.app-search-input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
+  height: 20px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+  background-image: url('src/assets/search.png');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 95%, 50%;
+}
+
