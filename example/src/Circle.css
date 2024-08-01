@@ -1,3 +1,15 @@
+.circle-background {
+  position:fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/circle/circle-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: -1000;
+}
+
 .circle-my-container {
     padding: 20px;
     position: relative; /* 确保子元素的绝对定位基于容器 */
@@ -10,16 +22,17 @@
     margin-bottom: 10px;
     position: relative; 
     top: 0;
-    left: 0;
+    left: 50px;
     padding: 10px;
-    background-color: #f8f9fa;
-    width: 25%;
+    background-color: #ffffffd2;
+    width: 20%;
   }
   
   .circle-header h1 {
     margin: 0;
     font-family: "Font1","Microsoft JhengHei", Arial, sans-serif;
     font-size: 36px;
+    align-items: center;
   }
   
   .circle-my-nav {
@@ -42,7 +55,7 @@
   .create-button {
     padding: 10px 20px;
     width: 250px;
-    background-color: #007bff;
+    background-color: #e3a564;
     color: white;
     border: none;
     border-radius: 4px;
@@ -51,14 +64,23 @@
   }
   
   .create-button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #eaac79, #803300); 
+    animation: shake 0.3s;
+  }
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
   }
 
   .circle-content {
     margin-top: 20px; /* 与导航栏距离 */
     width: 100%; 
     height: 460px; 
-    background-color: #f8f9fa; 
+    background-color: #f8f9faab; 
     border: 1px solid #ccc;
     display: flex;
     align-items: center;
@@ -68,32 +90,114 @@
     position: relative;
   }
 
-  .circle-content ul {
-    list-style-type: none;
-    padding: 0;
+  .circle-item {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 20px;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
   }
   
-  .circle-content li {
-    margin: 10px 0;
+  .follow-button {
+    padding: 5px 10px;
+    background-color: #72a728;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    left: 200px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
+  .follow-button.following {
+    background-color: grey;
+  }
+  .follow-button:hover {
+    background-color: #dfa657;
+  }
+  
+  .follow-button.following:hover {
+    background-color: rgb(228, 100, 100);
+  }
+
+  .enter-button {
+    padding: 10px 15px;
+    background-color: #fdc782;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease; /* 添加过渡效果 */
+  }
+  
+  .enter-button:hover {
+    background-color: #b37100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-50%) scale(0.9);
+    border: 2px solid #ffe6b6; 
+    background: linear-gradient(45deg, #ffb7b2, #e69500); 
+  }
+
   .pagination {
     position: absolute; 
-    bottom: 20px;
-    right: 20px; 
+    bottom: 10px;
+    right: 10px; 
   }
   
   .pagination button {
-    padding: 10px 20px;
+    padding: 8px 10px;
     margin: 0 10px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
   }
-  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
   .pagination button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  .circle-all-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+    padding: 20px;
+    right: 10px;
+    top: 30px;
+    position: fixed;
+    z-index: 1000;
+    background-color: rgba(240, 248, 255, 0.304);
+  }
+  
+  .search-all-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-all-input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 300px;
+    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
+    }

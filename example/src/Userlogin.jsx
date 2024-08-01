@@ -24,7 +24,7 @@ function Userlogin() {
         if (data.success) {
             navigate('/apppage');
         } else {
-            setError('账号或密码错误');
+            window.alert('登陆失败TAT,账号或密码错误'); // 显示弹窗
         }
     };
 
