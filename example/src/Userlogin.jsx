@@ -2,6 +2,7 @@ import { useState } from "react"
 import './Userlogin.css'
 import React, { Component } from "react"
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 function Userlogin() {
     const navigate = useNavigate()
@@ -11,20 +12,26 @@ function Userlogin() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            navigate('/apppage');
-        } else {
-            window.alert('登陆失败TAT,账号或密码错误'); // 显示弹窗
+        try {
+            const response = await axios.post('http://localhost:7001/api/login', {
+                username,
+                password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+    
+            const data = response.data;
+    
+            if (data.success) {
+                navigate('/apppage');
+            } else {
+                window.alert('登陆失败TAT,账号或密码错误'); // 显示弹窗
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            window.alert('服务器错误'); // 显示弹窗
         }
     };
 
