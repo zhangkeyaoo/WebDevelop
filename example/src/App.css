@@ -79,6 +79,10 @@ button {
   gap: 5px;
   /* 昵称和图片之间的间隔 */
 }
+.user-nickname {
+  font-size: 20px;
+  font-weight: bold;
+}
 
 .change-icon1 {
   position: relative;
@@ -105,7 +109,10 @@ button {
 .change-icon2:hover {
   transform: scale(1.2);
 }
-
+.user-id{
+  font-size:18px;
+  color: #000000;
+}
 .app-navbar {
   display: flex;
   justify-content: space-between;

@@ -35,4 +35,4 @@ AppDataSource.initialize().then(() => {
   console.error('Error during Data Source initialization:', error);
 });
 
-module.exports = AppDataSource;
+module.exports = {AppDataSource};

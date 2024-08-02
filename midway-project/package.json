@@ -6,10 +6,11 @@
   "dependencies": {
     "@midwayjs/bootstrap": "^3.12.0",
     "@midwayjs/core": "^3.16.2",
-    "@midwayjs/info": "^3.12.0",
-    "@midwayjs/koa": "^3.12.0",
+    "@midwayjs/cross-domain": "^3.16.6",
+    "@midwayjs/info": "^3.16.6",
+    "@midwayjs/koa": "^3.16.6",
     "@midwayjs/logger": "^3.1.0",
-    "@midwayjs/validate": "^3.12.0",
+    "@midwayjs/validate": "^3.16.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2"

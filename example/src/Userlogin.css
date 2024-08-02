@@ -71,7 +71,7 @@
   text-align: center;
 }
 
-.login-name {
+.login-id {
   position: relative;
   /* 设置为相对定位,内部元素可绝对定位 */
 }
@@ -105,12 +105,12 @@
   text-align: center;
 }
 
-.login-name,
+.login-id,
 .login-password {
   text-align: center;
 }
 
-.username,
+.userid,
 .password {
   margin-left: 40px;
   width: 250px;
@@ -123,7 +123,17 @@
   margin-top: 20px;
   font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
-
+.show-password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
 .login-button {
   text-align: center;
 }

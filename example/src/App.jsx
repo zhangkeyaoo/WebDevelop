@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef ,useEffect} from 'react'
 import './App.css'
 import React from "react"
 import { useNavigate } from 'react-router-dom'
@@ -6,14 +6,30 @@ import { useNavigate } from 'react-router-dom'
 function App() {
   const [count, setCount] = useState(0)
   const navigate = useNavigate()
-  const [nickname, setNickname] = useState('用户昵称');
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState('src/assets/user-avatar.jpg'); // 默认头像路径
   const avatarInputRef = useRef(null);
+  const [username, setUsername] = useState('');
+  const [userID, setUserId] = useState('');
+
+  //读取用户名
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    const storedUserId = localStorage.getItem('userId');
+
+    console.log('Stored UserName:', storedUsername); // 添加调试信息
+
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   // 更新昵称
-  const handleNicknameChange = (event) => {
-    setNickname(event.target.value);
+  const handleNicknameChange = (e) => {
+    setUsername(e.target.value);
   };
   const toggleEditing = () => {
     setIsEditing(!isEditing);
@@ -49,13 +65,16 @@ function App() {
   }
   return (
     <>
-
       <nav className='apppage'>
         <div className="app-background">  </div>
           <nav className="app-navbar">
             <button>热门新鲜事</button>
             <button onClick={goToCirclePage}>我的圈子</button>
-            <input type="text" placeholder="搜索感兴趣的内容" className="app-search-input" />
+            <input 
+            type="text" 
+            placeholder="搜索感兴趣的内容" 
+            className="app-search-input" 
+            />
           </nav>
           <div className="user-info">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -69,32 +88,36 @@ function App() {
               <input type="file"
                 ref={avatarInputRef}
                 style={{ display: 'none' }}
-                onChange={handleAvatarChange} />
+                onChange={handleAvatarChange}
+                 />
             </div>
             <div className="nickname-container">
-              <p alt="用户昵称"
-                className="user-nickname"
-                style={{ marginRight: '5px' }}>{nickname}</p>
+              <div className='user-nickname'>
+            <p> {username}</p>
+            </div>
               <img src="src/assets/change1.png"
                 alt="修改昵称"
                 onClick={toggleEditing}
-                className="change-icon1" />
+                className="change-icon1" 
+                />
+            </div>
+            <div className='user-id'>
+            <p>ID: {userID}</p> {/* 显示用户ID */}
             </div>
             {isEditing && (
               <input type="text"
-                value={nickname}
+                value={username}
                 onChange={handleNicknameChange}
                 onBlur={toggleEditing}
-                autoFocus />
+                autoFocus
+                 />
             )}
             <div className='user-info-button'>
               <button onClick={goToHomePage}>主页</button>
               <button onClick={goToMessagesPage}>消息</button>
             </div>
           </div>
-
       </nav>
-
     </>
   )
 };
