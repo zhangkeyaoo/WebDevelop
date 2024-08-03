@@ -1,17 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Circle.css';
-import { useState } from 'react';
+import axios from 'axios';
 
 // 我的圈子页面
 const Circle = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const circlesPerPage = 3; // 每页显示的圈子数量
+  const [circles, setCircles] = useState([]);
+  const [followingStatus, setFollowingStatus] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // 示例数据
-  const circles = [
-    '圈子1', '圈子2', '圈子3', '圈子4', '圈子5',
-    '圈子6', '圈子7', '圈子8', '圈子9', '圈子10'
-  ];
+  useEffect(() => {
+    const fetchCircles = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:7001/api/circles');
+        console.log('Response data:', response.data); // 添加日志信息
+        const circlesData = response.data?.data;
+
+        if (Array.isArray(circlesData)) {
+          setCircles(circlesData);
+          const initialFollowingStatus = circlesData.reduce((acc, circle) => {
+            acc[circle.name] = circle.isDefault;
+            return acc;
+          }, {});
+          setFollowingStatus(initialFollowingStatus);
+        } else {
+          console.error('Invalid data format:', circlesData);
+          setCircles([]); // 设置 circles 为一个空数组
+        }
+      } catch (error) {
+        console.error('Error fetching circles:', error);
+        setCircles([]); // 设置 circles 为一个空数组
+      }
+    };
+
+    fetchCircles();
+  }, []);
 
   // 初始化每个圈子的关注状态为已加入
   const initialFollowingStatus = circles.reduce((acc, circle) => {
@@ -19,7 +43,7 @@ const Circle = () => {
     return acc;
   }, {});
 
-  const [followingStatus, setFollowingStatus] = useState(initialFollowingStatus); // 存储每个圈子的关注状态
+  
 
   // 计算当前页显示的圈子
   const indexOfLastCircle = currentPage * circlesPerPage;
@@ -41,28 +65,28 @@ const Circle = () => {
 
   // 加入按钮点击处理函数
   const handleFollowClick = (circle) => {
-    if (followingStatus[circle]) {
+    if (followingStatus[circle.name]) {
       const confirmUnfollow = window.confirm('是否退出圈子TAT?');
       if (confirmUnfollow) {
         setFollowingStatus((prevStatus) => ({
           ...prevStatus,
-          [circle]: false
+          [circle.name]: false
         }));
       }
     } else {
       setFollowingStatus((prevStatus) => ({
         ...prevStatus,
-        [circle]: true
+        [circle.name]: true
       }));
     }
   };
-  const [searchTerm, setSearchTerm] = useState('');
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const filteredCircles = currentCircles.filter((circle) =>
-    circle.toLowerCase().includes(searchTerm.toLowerCase())
+    circle.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -90,18 +114,22 @@ const Circle = () => {
         </nav>
         <div className="circle-content">
           <div className="circle-container">
-            {filteredCircles.map((circle, index) => (
-              <div key={index} className="circle-item">
-                <span>{circle}</span>
-                <button
-                  className={`follow-button ${followingStatus[circle] ? 'following' : ''}`}
-                  onClick={() => handleFollowClick(circle)}
-                >
-                  {followingStatus[circle] ? '已加入' : '加入'}
-                </button>
-                <button className="enter-button">进入</button>
-              </div>
-            ))}
+          {filteredCircles.length > 0 ? (
+              filteredCircles.map((circle, index) => (
+                <div key={index} className="circle-item">
+                  <span>{circle.name}</span>
+                  <button
+                    className={`follow-button ${followingStatus[circle.name] ? 'following' : ''}`}
+                    onClick={() => handleFollowClick(circle)}
+                  >
+                    {followingStatus[circle.name] ? '已加入' : '加入'}
+                  </button>
+                  <button className="enter-button">进入</button>
+                </div>
+              ))
+            ) : (
+              <p>没有找到圈子。</p>
+            )}
             <div className="pagination">
               <button onClick={handlePrevPage} disabled={currentPage === 1}>
                 上一页
