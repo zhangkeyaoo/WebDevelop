@@ -9,28 +9,30 @@ const Circle = () => {
   const [circles, setCircles] = useState([]);
   const [followingStatus, setFollowingStatus] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newCircleName, setNewCircleName] = useState('');
 
   useEffect(() => {
     const fetchCircles = async () => {
+      const savedStatus = localStorage.getItem('followingStatus');
+      if (savedStatus) {
+        setFollowingStatus(JSON.parse(savedStatus));
+      }
       try {
         const response = await axios.get('http://127.0.0.1:7001/api/circles');
-        console.log('Response data:', response.data); // 添加日志信息
+        //console.log('Response data:', response.data); // 添加日志信息
         const circlesData = response.data?.data;
 
         if (Array.isArray(circlesData)) {
           setCircles(circlesData);
           const initialFollowingStatus = circlesData.reduce((acc, circle) => {
-            acc[circle.name] = circle.isDefault;
+            acc[circle.name] = circle.isDefault || (savedStatus && JSON.parse(savedStatus)[circle.name]);
             return acc;
           }, {});
           setFollowingStatus(initialFollowingStatus);
-        } else {
-          console.error('Invalid data format:', circlesData);
-          setCircles([]); // 设置 circles 为一个空数组
         }
       } catch (error) {
         console.error('Error fetching circles:', error);
-        setCircles([]); // 设置 circles 为一个空数组
       }
     };
 
@@ -43,7 +45,7 @@ const Circle = () => {
     return acc;
   }, {});
 
-  
+
 
   // 计算当前页显示的圈子
   const indexOfLastCircle = currentPage * circlesPerPage;
@@ -65,6 +67,9 @@ const Circle = () => {
 
   // 加入按钮点击处理函数
   const handleFollowClick = (circle) => {
+    const updatedStatus = { ...followingStatus, [circle.name]: !followingStatus[circle.name] };
+    setFollowingStatus(updatedStatus);
+    localStorage.setItem('followingStatus', JSON.stringify(updatedStatus));
     if (followingStatus[circle.name]) {
       const confirmUnfollow = window.confirm('是否退出圈子TAT?');
       if (confirmUnfollow) {
@@ -83,23 +88,48 @@ const Circle = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    // setSearchTerm(searchValue);
+    setCurrentPage(1); // 设置当前页为第一页
   };
 
-  const filteredCircles = currentCircles.filter((circle) =>
-    circle.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  //创造圈子
+  const handleCreateCircle = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:7001/api/circles', {
+        name: newCircleName,
+        isDefault: false
+      });
+      const newCircle = response.data.data;
+      setCircles([...circles, newCircle]);
+      setFollowingStatus({ ...followingStatus, [newCircle.name]: true });
+      localStorage.setItem('followingStatus', JSON.stringify({ ...followingStatus, [newCircle.name]: true }));
+      setShowCreateForm(false);
+      setNewCircleName('');
+    } catch (error) {
+      console.error('Error creating circle:', error);
+    };
+
+  };
+  let filteredCircles = [];
+  if (searchTerm === '') {
+     filteredCircles = currentCircles;
+  } else {
+     filteredCircles = circles.filter((circle) =>
+      circle.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ).slice(indexOfFirstCircle, indexOfLastCircle);
+  }
 
   return (
     <div className="circle-container">
       <div className="circle-background">  </div>
       <div className="circle-my-container">
         <header className="circle-header">
-        <img
-      src="src/assets/back.png"
-      alt="返回"
-      className="back-image"
-      onClick={() => window.location.href = '/apppage'}
-    />
+          <img
+            src="src/assets/back.png"
+            alt="返回"
+            className="back-image"
+            onClick={() => window.location.href = '/apppage'}
+          />
           <h1>我的圈子</h1>
         </header>
         <nav className="circle-my-nav">
@@ -110,11 +140,23 @@ const Circle = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <button className="create-button">创建圈子</button>
+          <button className="create-button" onClick={() => setShowCreateForm(true)}>创建圈子</button>
         </nav>
+        {showCreateForm && (
+          <div className="create-circle-form">
+            <input
+              type="text"
+              placeholder="输入圈子名称"
+              value={newCircleName}
+              onChange={(e) => setNewCircleName(e.target.value)}
+            />
+            <button onClick={handleCreateCircle}>确定</button>
+            <button onClick={() => setShowCreateForm(false)}>取消</button>
+          </div>
+        )}
         <div className="circle-content">
           <div className="circle-container">
-          {filteredCircles.length > 0 ? (
+            {filteredCircles.length > 0 ? (
               filteredCircles.map((circle, index) => (
                 <div key={index} className="circle-item">
                   <span>{circle.name}</span>

@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Provide } from '@midwayjs/core';
+import { Controller, Get, Post,Inject, Provide,Body } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { AppDataSource } from '../db';
 import { Circle } from '../entity/circle';
@@ -34,6 +34,28 @@ export class CircleController {
         this.ctx.body = { success: false, message: 'Internal Server Error' };
         this.ctx.status = 500;
       }
+    }
+  }
+  @Post('/circles')
+  async createCircle(@Body() body) {
+    try {
+      console.log('Received request to create circle:', body);
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+      }
+      this.circleRepository = AppDataSource.getRepository(Circle);
+
+      const newCircle = new Circle();
+      newCircle.name = body.name;
+      newCircle.isDefault = body.isDefault;
+
+      const savedCircle = await this.circleRepository.save(newCircle);
+      console.log('Created new circle:', savedCircle);
+      this.ctx.body = { success: true, data: savedCircle };
+    } catch (error) {
+      console.error('Error creating circle:', error);
+      this.ctx.body = { success: false, message: 'Internal Server Error' };
+      this.ctx.status = 500;
     }
   }
 }

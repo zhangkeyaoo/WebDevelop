@@ -19,16 +19,7 @@ const AppDataSource = new DataSource({
 
 
 AppDataSource.initialize().then(async() => {
-  console.log('Data Source has been initialized!');
 
-  // 清空现有数据
-  try {
-    await AppDataSource.manager.clear(Circle);
-    await AppDataSource.manager.clear(User);
-    console.log('Existing data has been cleared');
-  } catch (error) {
-    console.error('Error clearing existing data:', error);
-  }
 
   // 创建新用户实例
   const user = new User();
