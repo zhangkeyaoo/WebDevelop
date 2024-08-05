@@ -18,6 +18,7 @@ function Userlogin() {
                 userId,
                 password
             }, {
+            
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -34,7 +35,16 @@ function Userlogin() {
             }
         } catch (error) {
             console.error('Error during login:', error);
-            window.alert('登陆失败TAT,ID或密码错误'); // 显示弹窗
+        if (error.response) {
+            // 服务器响应了一个状态码，且该状态码不在 2xx 范围内
+            window.alert(`登陆失败: ${error.response.data.message || '服务器错误'}`);
+        } else if (error.request) {
+            // 请求已经发出，但没有收到响应
+            window.alert('登陆失败: 没有收到服务器响应');
+        } else {
+            // 其他错误
+            window.alert(`登陆失败，其他错误: ${error.message}`);
+        }
         }
     };
 
@@ -70,7 +80,6 @@ function Userlogin() {
                                 />
                                 显示密码
                             </div>
-
                         </div>
                         {error && <p className="error">{error}</p>}
                         <div className="login-button">

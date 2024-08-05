@@ -11,41 +11,36 @@ const Circle = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newCircleName, setNewCircleName] = useState('');
+  const [showOnlyJoined, setShowOnlyJoined] = useState(false);
+
+  const fetchCircles = async () => {
+    // 从服务器获取圈子数据
+    try {
+      const response = await axios.get('http://127.0.0.1:7001/api/circles');
+      setCircles(response.data.data);
+    } catch (error) {
+      console.error('Error fetching circles:', error);
+    }
+  };
+  const fetchUserCircles = async () => {
+    try {
+      const userId = localStorage.getItem('userId'); // 从本地存储获取用户ID
+      const response = await axios.get(`http://127.0.0.1:7001/api/user/${userId}/circles`);
+      const userCircles = response.data.data;
+      const status = userCircles.reduce((acc, circle) => {
+        acc[circle.id] = true;
+        return acc;
+      }, {});
+      setFollowingStatus(status);
+    } catch (error) {
+      console.error('Error fetching user circles:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCircles = async () => {
-      const savedStatus = localStorage.getItem('followingStatus');
-      if (savedStatus) {
-        setFollowingStatus(JSON.parse(savedStatus));
-      }
-      try {
-        const response = await axios.get('http://127.0.0.1:7001/api/circles');
-        //console.log('Response data:', response.data); // 添加日志信息
-        const circlesData = response.data?.data;
-
-        if (Array.isArray(circlesData)) {
-          setCircles(circlesData);
-          const initialFollowingStatus = circlesData.reduce((acc, circle) => {
-            acc[circle.name] = circle.isDefault || (savedStatus && JSON.parse(savedStatus)[circle.name]);
-            return acc;
-          }, {});
-          setFollowingStatus(initialFollowingStatus);
-        }
-      } catch (error) {
-        console.error('Error fetching circles:', error);
-      }
-    };
-
     fetchCircles();
+    fetchUserCircles();
   }, []);
-
-  // 初始化每个圈子的关注状态为已加入
-  const initialFollowingStatus = circles.reduce((acc, circle) => {
-    acc[circle] = true;
-    return acc;
-  }, {});
-
-
 
   // 计算当前页显示的圈子
   const indexOfLastCircle = currentPage * circlesPerPage;
@@ -66,23 +61,39 @@ const Circle = () => {
   };
 
   // 加入按钮点击处理函数
-  const handleFollowClick = (circle) => {
-    const updatedStatus = { ...followingStatus, [circle.name]: !followingStatus[circle.name] };
-    setFollowingStatus(updatedStatus);
-    localStorage.setItem('followingStatus', JSON.stringify(updatedStatus));
-    if (followingStatus[circle.name]) {
-      const confirmUnfollow = window.confirm('是否退出圈子TAT?');
+  const handleFollowClick = async (circle) => {
+    if (followingStatus[circle.id]) {
+      // 弹出确认对话框
+      const confirmUnfollow = window.confirm('是否确认退出该圈子？');
       if (confirmUnfollow) {
-        setFollowingStatus((prevStatus) => ({
-          ...prevStatus,
-          [circle.name]: false
-        }));
+        try {
+          const userId = localStorage.getItem('userId'); // 从本地存储获取用户ID
+          await axios.post('http://127.0.0.1:7001/api/circles/unfollow', {
+            userId,
+            circleId: circle.id,
+          });
+          setFollowingStatus((prevStatus) => ({
+            ...prevStatus,
+            [circle.id]: false,
+          }));
+        } catch (error) {
+          console.error('Error unfollowing circle:', error);
+        }
       }
     } else {
-      setFollowingStatus((prevStatus) => ({
-        ...prevStatus,
-        [circle.name]: true
-      }));
+      try {
+        const userId = localStorage.getItem('userId'); // 从本地存储获取用户ID
+        await axios.post('http://127.0.0.1:7001/api/circles/follow', {
+          userId,
+          circleId: circle.id,
+        });
+        setFollowingStatus((prevStatus) => ({
+          ...prevStatus,
+          [circle.id]: true,
+        }));
+      } catch (error) {
+        console.error('Error following circle:', error);
+      }
     }
   };
 
@@ -92,32 +103,42 @@ const Circle = () => {
     setCurrentPage(1); // 设置当前页为第一页
   };
 
-  //创造圈子
+  //创建圈子
   const handleCreateCircle = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:7001/api/circles', {
+      await axios.post('http://127.0.0.1:7001/api/circles', {
         name: newCircleName,
         isDefault: false
       });
-      const newCircle = response.data.data;
-      setCircles([...circles, newCircle]);
-      setFollowingStatus({ ...followingStatus, [newCircle.name]: true });
-      localStorage.setItem('followingStatus', JSON.stringify({ ...followingStatus, [newCircle.name]: true }));
-      setShowCreateForm(false);
       setNewCircleName('');
+      setShowCreateForm(false);
+      fetchCircles(); // 重新获取圈子列表
     } catch (error) {
       console.error('Error creating circle:', error);
+      alert('创建圈子失败，圈子已经存在啦');
     };
 
   };
+
+  let sortedCircles = circles.sort((a, b) => {
+    if (followingStatus[a.id] && !followingStatus[b.id]) {
+      return -1;
+    }
+    if (!followingStatus[a.id] && followingStatus[b.id]) {
+      return 1;
+    }
+    return 0;
+  });
+
   let filteredCircles = [];
   if (searchTerm === '') {
-     filteredCircles = currentCircles;
+    filteredCircles = sortedCircles;
   } else {
-     filteredCircles = circles.filter((circle) =>
+    filteredCircles = sortedCircles.filter((circle) =>
       circle.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(indexOfFirstCircle, indexOfLastCircle);
+    );
   }
+  filteredCircles = filteredCircles.slice(indexOfFirstCircle, indexOfLastCircle);
 
   return (
     <div className="circle-container">
@@ -146,7 +167,7 @@ const Circle = () => {
           <div className="create-circle-form">
             <input
               type="text"
-              placeholder="输入圈子名称"
+              placeholder="输入新圈子名称"
               value={newCircleName}
               onChange={(e) => setNewCircleName(e.target.value)}
             />
@@ -156,19 +177,19 @@ const Circle = () => {
         )}
         <div className="circle-content">
           <div className="circle-container">
-            {filteredCircles.length > 0 ? (
-              filteredCircles.map((circle, index) => (
-                <div key={index} className="circle-item">
-                  <span>{circle.name}</span>
-                  <button
-                    className={`follow-button ${followingStatus[circle.name] ? 'following' : ''}`}
-                    onClick={() => handleFollowClick(circle)}
-                  >
-                    {followingStatus[circle.name] ? '已加入' : '加入'}
-                  </button>
-                  <button className="enter-button">进入</button>
-                </div>
-              ))
+          {filteredCircles.length > 0 ? (
+            filteredCircles.map((circle) => (
+              <div key={circle.id} className="circle-item">
+                <span>{circle.name}</span>
+                <button
+                  className={`follow-button ${followingStatus[circle.id] ? 'following' : ''}`}
+                  onClick={() => handleFollowClick(circle)}
+                >
+                      {followingStatus[circle.id] ? '已加入' : '加入'}
+                    </button>
+                    <button className="enter-button">进入</button>
+                  </div>
+                ))
             ) : (
               <p>没有找到圈子。</p>
             )}
@@ -183,7 +204,7 @@ const Circle = () => {
           </div>
         </div>
       </div>
-      <div className="circle-all-container">
+      {/* <div className="circle-all-container">
         <div className="search-all-container">
           <input
             type="text"
@@ -191,7 +212,7 @@ const Circle = () => {
             className="search-all-input"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

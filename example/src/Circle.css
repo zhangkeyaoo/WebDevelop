@@ -76,6 +76,7 @@
     100% { transform: translateX(0); }
   }
 
+
   .circle-content {
     margin-top: 20px; /* 与导航栏距离 */
     width: 100%; 
@@ -117,16 +118,17 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+  .follow-button:hover {
+    background-color: #ffc885; /* 加入按钮的悬停颜色 */
+  }
   
   .follow-button.following {
-    background-color: grey;
-  }
-  .follow-button:hover {
-    background-color: #dfa657;
+    background-color: #c5c3c3; /* 已加入按钮的颜色 */
   }
   
   .follow-button.following:hover {
-    background-color: rgb(228, 100, 100);
+    background-color: #cf423d; /* 已加入按钮的悬停颜色 */
   }
 
   .enter-button {
@@ -175,7 +177,7 @@
     cursor: not-allowed;
   }
 
-  .circle-all-container {
+  /* .circle-all-container {
     display: flex;
     justify-content: flex-end;
     width: 30%;
@@ -186,8 +188,8 @@
     z-index: 1000;
     background-color: rgba(240, 248, 255, 0.304);
   }
-  
-  .search-all-container {
+   */
+  /* .search-all-container {
     display: flex;
     align-items: center;
   }
@@ -200,4 +202,4 @@
     border-radius: 10px;
     width: 300px;
     font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
-    }
+    } */

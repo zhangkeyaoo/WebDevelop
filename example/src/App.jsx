@@ -1,4 +1,4 @@
-import { useState, useRef ,useEffect} from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import React from "react"
 import { useNavigate } from 'react-router-dom'
@@ -62,61 +62,71 @@ function App() {
   // 跳转到圈子页面
   const goToCirclePage = () => {
     navigate('/circle')
+
   }
+  const goToLoginPage = () => {
+    navigate('/login')
+  }
+
   return (
     <>
       <nav className='apppage'>
         <div className="app-background">  </div>
-          <nav className="app-navbar">
-            <button>热门新鲜事</button>
-            <button onClick={goToCirclePage}>我的圈子</button>
-            <input 
-            type="text" 
-            placeholder="搜索感兴趣的内容" 
-            className="app-search-input" 
+        <nav className="app-navbar">
+          <button>热门新鲜事</button>
+          <button onClick={goToCirclePage}>我的圈子</button>
+          <input
+            type="text"
+            placeholder="搜索感兴趣的内容"
+            className="app-search-input"
+          />
+          <button onClick={() => {
+            if (window.confirm('确定要退出登录吗QAQ?')) {
+              goToLoginPage();
+            }
+          }}>退出登录</button>
+        </nav>
+        <div className="user-info">
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            <img src={avatar} alt="用户头像" className='user-avatar' />
+            <img
+              src="src/assets/change2.png"
+              alt="修改头像"
+              className="change-icon2"
+              onClick={triggerFileInput}
             />
-          </nav>
-          <div className="user-info">
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <img src={avatar} alt="用户头像" className='user-avatar' />
-              <img
-                src="src/assets/change2.png"
-                alt="修改头像"
-                className="change-icon2"
-                onClick={triggerFileInput}
-              />
-              <input type="file"
-                ref={avatarInputRef}
-                style={{ display: 'none' }}
-                onChange={handleAvatarChange}
-                 />
-            </div>
-            <div className="nickname-container">
-              <div className='user-nickname'>
-            <p> {username}</p>
-            </div>
-              <img src="src/assets/change1.png"
-                alt="修改昵称"
-                onClick={toggleEditing}
-                className="change-icon1" 
-                />
-            </div>
-            <div className='user-id'>
-            <p>ID: {userID}</p> {/* 显示用户ID */}
-            </div>
-            {isEditing && (
-              <input type="text"
-                value={username}
-                onChange={handleNicknameChange}
-                onBlur={toggleEditing}
-                autoFocus
-                 />
-            )}
-            <div className='user-info-button'>
-              <button onClick={goToHomePage}>主页</button>
-              <button onClick={goToMessagesPage}>消息</button>
-            </div>
+            <input type="file"
+              ref={avatarInputRef}
+              style={{ display: 'none' }}
+              onChange={handleAvatarChange}
+            />
           </div>
+          <div className="nickname-container">
+            <div className='user-nickname'>
+              <p> {username}</p>
+            </div>
+            <img src="src/assets/change1.png"
+              alt="修改昵称"
+              onClick={toggleEditing}
+              className="change-icon1"
+            />
+          </div>
+          <div className='user-id'>
+            <p>ID: {userID}</p> {/* 显示用户ID */}
+          </div>
+          {isEditing && (
+            <input type="text"
+              value={username}
+              onChange={handleNicknameChange}
+              onBlur={toggleEditing}
+              autoFocus
+            />
+          )}
+          <div className='user-info-button'>
+            <button onClick={goToHomePage}>主页</button>
+            <button onClick={goToMessagesPage}>消息</button>
+          </div>
+        </div>
       </nav>
     </>
   )

@@ -18,24 +18,41 @@ const AppDataSource = new DataSource({
 });
 
 
-AppDataSource.initialize().then(async() => {
-
-
+AppDataSource.initialize().then(async () => {
   // 创建新用户实例
-  const user = new User();
-  user.id = '1';
-  user.username = 'Yao';
-  user.password = 'zky134679852zky';
-  user.avatar = 'default';
+  const users = [
+    { id: '1', username: 'Yao', password: 'zky134679852zky', avatar: 'default' },//用户1
+    { id: '2', username: 'Dong', password: '123456', avatar: 'default' }, // 用户2
+  ];
 
   // 保存新用户到数据库
   try {
-    await AppDataSource.manager.save(user);
-    console.log('New User has been saved');
+    for (const userData of users) {
+      const user = new User();
+      const existingUser = await AppDataSource.manager.findOne(User, { where: { id: userData.id } });
+      if (existingUser) {
+        console.log(`User with id ${userData.id} already exists, skipping save.`);
+        continue;
+      }
+      user.id = userData.id;
+      user.username = userData.username;
+      user.password = userData.password;
+      user.avatar = userData.avatar;
+      await AppDataSource.manager.save(user);
+    }
+    console.log('New Users have been saved');
   } catch (error) {
-    console.error('Error saving new user:', error);
+    console.error('Error saving new users:', error);
   }
-  
+
+  // 查询并打印所有用户
+  try {
+    const savedUsers = await AppDataSource.manager.find(User);
+    console.log('All users:', savedUsers);
+  } catch (error) {
+    console.error('Error querying users:', error);
+  }
+
   // 创建初始圈子
   const circles = [
     { name: '运动圈', isDefault: true },
@@ -48,6 +65,12 @@ AppDataSource.initialize().then(async() => {
   // 保存初始圈子到数据库
   try {
     for (const circleData of circles) {
+      const existingCircle = await AppDataSource.manager.findOne(Circle, { where: { name: circleData.name } });
+      if (existingCircle) {
+        console.log(`Circle with name ${circleData.name} already exists, skipping save.`);
+        continue;
+      }
+
       const circle = new Circle();
       circle.name = circleData.name;
       circle.isDefault = circleData.isDefault;
@@ -57,6 +80,31 @@ AppDataSource.initialize().then(async() => {
   } catch (error) {
     console.error('Error saving initial circles:', error);
   }
+  
+  // 更新用户关注的圈子
+  try {
+    const user1 = await AppDataSource.manager.findOne(User, { where: { id: '1' }, relations: ['circles'] });
+    const user2 = await AppDataSource.manager.findOne(User, { where: { id: '2' }, relations: ['circles'] });
+
+    const circle1 = await AppDataSource.manager.findOne(Circle, { where: { name: '运动圈' } });
+    const circle2 = await AppDataSource.manager.findOne(Circle, { where: { name: '萌宠圈' } });
+
+    if (user1 && circle1) {
+      user1.circles = [circle1];
+      await AppDataSource.manager.save(user1);
+    }
+
+    if (user2 && circle2) {
+      user2.circles = [circle2];
+      await AppDataSource.manager.save(user2);
+    }
+
+    console.log('Users have been updated with their circles');
+  } catch (error) {
+    console.error('Error updating users with circles:', error);
+  }
+
+
 }).catch(error => console.error('Error during Data Source initialization:', error));
 
-module.exports = {AppDataSource};
+module.exports = { AppDataSource };

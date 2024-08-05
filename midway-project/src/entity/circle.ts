@@ -1,5 +1,5 @@
-// entity/circle.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { User } from './user';
 
 @Entity()
 export class Circle {
@@ -11,4 +11,7 @@ export class Circle {
   
   @Column({ default: false })
   isDefault: boolean = false;
+
+  @ManyToMany(() => User, user => user.circles)
+  users: User[];
 }
