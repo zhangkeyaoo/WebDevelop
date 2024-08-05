@@ -15,7 +15,8 @@ export class User {
   @Column({ default: 'default' })
   avatar: string='';
 
-  @ManyToMany(() => Circle)
+  @ManyToMany(() => Circle, circle => circle.users)
   @JoinTable()
   circles: Circle[];
+  
 }

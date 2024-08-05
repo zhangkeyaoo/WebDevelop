@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Circle.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // 我的圈子页面
 const Circle = () => {
@@ -11,7 +12,7 @@ const Circle = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newCircleName, setNewCircleName] = useState('');
-  const [showOnlyJoined, setShowOnlyJoined] = useState(false);
+  const navigate = useNavigate();
 
   const fetchCircles = async () => {
     // 从服务器获取圈子数据
@@ -187,7 +188,7 @@ const Circle = () => {
                 >
                       {followingStatus[circle.id] ? '已加入' : '加入'}
                     </button>
-                    <button className="enter-button">进入</button>
+                    <button className="enter-button" onClick={() => navigate(`/circle/${circle.id}`)}>进入</button>
                   </div>
                 ))
             ) : (
@@ -204,15 +205,6 @@ const Circle = () => {
           </div>
         </div>
       </div>
-      {/* <div className="circle-all-container">
-        <div className="search-all-container">
-          <input
-            type="text"
-            placeholder="搜索更多圈子"
-            className="search-all-input"
-          />
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import App from './App.jsx'
 import Head from './Head.jsx'
 import Userlogin from './Userlogin.jsx'
 import Circle from './Circle.jsx'
-// import CircleDetail from './CircleDetail.jsx'
+import Incircle from './Incircle.jsx';
 import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Userlogin />} />
         <Route path="/apppage" element={< App />} />
         <Route path="/circle" element={< Circle />} />
-        {/* <Route path="/circle/:id" element={<CircleDetail />} /> */}
+        <Route path="/circle/:id" element={<Incircle />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

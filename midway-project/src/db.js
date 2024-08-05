@@ -23,6 +23,7 @@ AppDataSource.initialize().then(async () => {
   const users = [
     { id: '1', username: 'Yao', password: 'zky134679852zky', avatar: 'default' },//用户1
     { id: '2', username: 'Dong', password: '123456', avatar: 'default' }, // 用户2
+    { id: '-1', username: 'admin', password: 'admin', avatar: 'default' }, // 管理员
   ];
 
   // 保存新用户到数据库
@@ -61,7 +62,7 @@ AppDataSource.initialize().then(async () => {
     { name: '美食圈', isDefault: true },
     { name: '旅行圈', isDefault: true },
   ];
-
+  AppDataSource.manager.clear(Circle);
   // 保存初始圈子到数据库
   try {
     for (const circleData of circles) {
@@ -74,6 +75,8 @@ AppDataSource.initialize().then(async () => {
       const circle = new Circle();
       circle.name = circleData.name;
       circle.isDefault = circleData.isDefault;
+      circle.users = [users[2]] // 创建一个空的用户数组
+      console.log('circle:', circle);
       await AppDataSource.manager.save(circle);
     }
     console.log('Initial circles have been saved');
@@ -91,11 +94,15 @@ AppDataSource.initialize().then(async () => {
 
     if (user1 && circle1) {
       user1.circles = [circle1];
+      circle1.users = [user1];
+      await AppDataSource.manager.save(circle1);
       await AppDataSource.manager.save(user1);
     }
 
     if (user2 && circle2) {
       user2.circles = [circle2];
+      circle2.users = [user2];
+      await AppDataSource.manager.save(circle2);
       await AppDataSource.manager.save(user2);
     }
 

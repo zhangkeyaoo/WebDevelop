@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 import { User } from './user';
 
 @Entity()
@@ -12,6 +12,11 @@ export class Circle {
   @Column({ default: false })
   isDefault: boolean = false;
 
+  @Column({ default: 0 })
+  userCount: number = 0; 
+
   @ManyToMany(() => User, user => user.circles)
+  @JoinTable()
   users: User[];
+  
 }

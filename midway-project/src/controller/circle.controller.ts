@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Inject, Provide,Body,Param } from '@midwayjs/core';
+import { Controller, Get, Post, Inject, Provide, Body, Param } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { AppDataSource } from '../db';
 import { Circle } from '../entity/circle';
@@ -69,7 +69,7 @@ export class CircleController {
         await AppDataSource.initialize();
       }
       this.circleRepository = AppDataSource.getRepository(Circle);
-
+      
       // 检查圈子是否已经存在
       const existingCircle = await this.circleRepository.findOne({ where: { name: body.name } });
       if (existingCircle) {
@@ -104,15 +104,23 @@ export class CircleController {
 
       const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['circles'] });
       const circle = await this.circleRepository.findOne({ where: { id: circleId } });
-
+      console.log('user:', user);
       if (!user || !circle) {
         this.ctx.body = { success: false, message: 'User or Circle not found' };
         this.ctx.status = 404;
         return;
       }
-
+      console.log('user:', user);
+      console.log('circle:', circle);
       user.circles.push(circle);
+      circle.users.push(user);
+      // circle.userCount += 1; // 更新 userCount
+      circle.userCount = circle.users.length; // 更新 userCount
+      console.log('user.circles:', user.circles);
+      console.log('circle.users:', circle.users);
+      console.log('circle.userCount:', circle.userCount);
       await this.userRepository.save(user);
+      await this.circleRepository.save(circle); // 保存更新后的 circle
 
       this.ctx.body = { success: true, message: 'Circle followed successfully' };
     } catch (error) {
@@ -121,7 +129,7 @@ export class CircleController {
       this.ctx.status = 500;
     }
   }
-@Post('/circles/unfollow')
+  @Post('/circles/unfollow')
   async unfollowCircle(@Body() body) {
     try {
       const { userId, circleId } = body;
@@ -140,8 +148,15 @@ export class CircleController {
         return;
       }
 
+      if (!Array.isArray(circle.users)) {
+        circle.users = [];
+      }
+
+      circle.users = circle.users.filter(u => u.id !== user.id);
       user.circles = user.circles.filter(c => c.id !== circle.id);
+      circle.userCount = circle.users.length; // 更新 userCount
       await this.userRepository.save(user);
+      await this.circleRepository.save(circle); // 保存更新后的 circle
 
       this.ctx.body = { success: true, message: 'Circle unfollowed successfully' };
     } catch (error) {
@@ -150,5 +165,32 @@ export class CircleController {
       this.ctx.status = 500;
     }
   }
+
+  @Get('/circles/:id')
+  async getCircleById(@Param('id') id: number) {
+    try {
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+      }
+      console.log('Received request for /api/circles/:id');
+      this.circleRepository = AppDataSource.getRepository(Circle);
+
+      const circle = await this.circleRepository.findOne({ where: { id } });
+      console.log('Fetched circle by ID:', circle);
+      if (!circle) {
+        this.ctx.status = 404;
+        this.ctx.body = { success: false, message: 'Circle not found' };
+        return;
+      }
+
+
+      this.ctx.body = { success: true, data: { circle } };
+    } catch (error) {
+      console.error('Error fetching circle by ID:', error);
+      this.ctx.status = 500;
+      this.ctx.body = { success: false, message: 'Internal Server Error' };
+    }
+  }
+
 }
 
