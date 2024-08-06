@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Incircle.css';
+import backIcon from './assets/back.png';
 
 const Incircle = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [circle, setCircle] = useState({ name: '', isDefault: true, userCount: 0, id: 0 });
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +35,7 @@ const Incircle = () => {
                 }
             }
         };
-        
+
 
         fetchCircleDetails();
     }, [id]);
@@ -51,16 +54,29 @@ const Incircle = () => {
 
     return (
         <div className="incircle-container">
+            <div className="incircle-background">  </div>
             <header className="incircle-header">
-                <h1>{circle.name}</h1>
-                <span>成员数量: {userCount}</span>
-                <input
+                <img
+                    src={backIcon}
+                    alt="返回"
+                    className="back-button"
+                    onClick={() => navigate('/circle')}
+                />
+                <h1 className='circle-name'>{circle.name}</h1>
+                <span className='user-count'>成员数量: {userCount}</span>
+                <input className='search-article'
                     type="text"
                     placeholder="搜索帖子"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                <button className="post-button" onClick={() => navigate(`/circle/${id}/post`)}>发帖</button>
             </header>
+            <h2 className="latest-posts-title">最新帖子</h2>
+            <div className="posts-section">
+                
+                {/* 在这里添加帖子的内容 */}
+            </div>
             {/* 其他内容 */}
         </div>
     );

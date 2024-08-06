@@ -1,0 +1,143 @@
+.post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    height: 100vh; /* 使容器占满整个视口高度 */
+}
+
+.post-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('src/assets/post-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: -1;
+}
+
+.back-incircle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.post-container form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    align-items: center; /* 水平居中 */
+}
+.post-title {
+    position: fixed;
+    width: 50%;
+    padding: 20px;
+    top: 40px;
+    left: 60px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.5em;
+    background-color:  #ffffffbb;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.post-content {
+    position: fixed;
+    width: 50%;
+    padding: 20px;
+    top: 140px;
+    left: 60px;
+    bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.5em;
+    resize: none;
+    background-color:  #ffffffbb;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.image-upload-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Font2", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.post-image {
+    position: fixed;
+    width: 30%;
+    padding: 20px;
+    right: 50px;
+    top: 40px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color:  #ffffffbb;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.image-preview-container {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    right: 50px;
+    top: 140px;
+}
+
+.image-preview {
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-preview img {
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.image-preview button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.image-preview button:hover {
+    background-color: #cc0000;
+}
+
+.post-submit {
+    position: fixed;
+    width: 10%;
+    padding: 20px;
+    right: 40px;
+    bottom: 20px;
+    background-color: #ffa75a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.post-submit:hover {
+    background-color: #b36500;
+}

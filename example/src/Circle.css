@@ -176,30 +176,3 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
-
-  /* .circle-all-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 30%;
-    padding: 20px;
-    right: 10px;
-    top: 30px;
-    position: fixed;
-    z-index: 1000;
-    background-color: rgba(240, 248, 255, 0.304);
-  }
-   */
-  /* .search-all-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-all-input {
-    flex: 1;
-    padding: 10px;
-    margin-right: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 300px;
-    font-family: "Font3","Microsoft JhengHei", Arial, sans-serif;
-    } */

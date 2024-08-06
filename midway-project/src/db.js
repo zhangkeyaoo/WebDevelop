@@ -62,9 +62,10 @@ AppDataSource.initialize().then(async () => {
     { name: '美食圈', isDefault: true },
     { name: '旅行圈', isDefault: true },
   ];
-  AppDataSource.manager.clear(Circle);
   // 保存初始圈子到数据库
   try {
+
+    
     for (const circleData of circles) {
       const existingCircle = await AppDataSource.manager.findOne(Circle, { where: { name: circleData.name } });
       if (existingCircle) {
@@ -75,7 +76,7 @@ AppDataSource.initialize().then(async () => {
       const circle = new Circle();
       circle.name = circleData.name;
       circle.isDefault = circleData.isDefault;
-      circle.users = [users[2]] // 创建一个空的用户数组
+      // circle.users = [users[2]] // 创建一个空的用户数组
       console.log('circle:', circle);
       await AppDataSource.manager.save(circle);
     }

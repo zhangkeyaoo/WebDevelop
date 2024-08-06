@@ -113,9 +113,9 @@ export class CircleController {
       console.log('user:', user);
       console.log('circle:', circle);
       user.circles.push(circle);
-      circle.users.push(user);
+      // circle.users.push(user);
       // circle.userCount += 1; // 更新 userCount
-      circle.userCount = circle.users.length; // 更新 userCount
+      // circle.userCount = circle.users.length; // 更新 userCount
       console.log('user.circles:', user.circles);
       console.log('circle.users:', circle.users);
       console.log('circle.userCount:', circle.userCount);
