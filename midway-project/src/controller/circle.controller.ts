@@ -69,7 +69,7 @@ export class CircleController {
         await AppDataSource.initialize();
       }
       this.circleRepository = AppDataSource.getRepository(Circle);
-      
+
       // 检查圈子是否已经存在
       const existingCircle = await this.circleRepository.findOne({ where: { name: body.name } });
       if (existingCircle) {
@@ -103,24 +103,18 @@ export class CircleController {
       this.userRepository = AppDataSource.getRepository(User);
 
       const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['circles'] });
-      const circle = await this.circleRepository.findOne({ where: { id: circleId } });
+      const circle = await this.circleRepository.findOne({ where: { id: circleId }, relations: ['users'] });
       console.log('user:', user);
       if (!user || !circle) {
         this.ctx.body = { success: false, message: 'User or Circle not found' };
         this.ctx.status = 404;
         return;
       }
-      console.log('user:', user);
-      console.log('circle:', circle);
       user.circles.push(circle);
-      // circle.users.push(user);
-      // circle.userCount += 1; // 更新 userCount
-      // circle.userCount = circle.users.length; // 更新 userCount
-      console.log('user.circles:', user.circles);
-      console.log('circle.users:', circle.users);
-      console.log('circle.userCount:', circle.userCount);
+      circle.users.push(user);
       await this.userRepository.save(user);
       await this.circleRepository.save(circle); // 保存更新后的 circle
+      circle.userCount = circle.users.length; // 更新 userCount
 
       this.ctx.body = { success: true, message: 'Circle followed successfully' };
     } catch (error) {
@@ -140,7 +134,7 @@ export class CircleController {
       this.userRepository = AppDataSource.getRepository(User);
 
       const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['circles'] });
-      const circle = await this.circleRepository.findOne({ where: { id: circleId } });
+      const circle = await this.circleRepository.findOne({ where: { id: circleId }, relations: ['users'] });
 
       if (!user || !circle) {
         this.ctx.body = { success: false, message: 'User or Circle not found' };
@@ -148,15 +142,12 @@ export class CircleController {
         return;
       }
 
-      if (!Array.isArray(circle.users)) {
-        circle.users = [];
-      }
-
       circle.users = circle.users.filter(u => u.id !== user.id);
       user.circles = user.circles.filter(c => c.id !== circle.id);
-      circle.userCount = circle.users.length; // 更新 userCount
+
       await this.userRepository.save(user);
       await this.circleRepository.save(circle); // 保存更新后的 circle
+      circle.userCount = circle.users.length; // 更新 userCount
 
       this.ctx.body = { success: true, message: 'Circle unfollowed successfully' };
     } catch (error) {
@@ -175,8 +166,9 @@ export class CircleController {
       console.log('Received request for /api/circles/:id');
       this.circleRepository = AppDataSource.getRepository(Circle);
 
-      const circle = await this.circleRepository.findOne({ where: { id } });
+      const circle = await this.circleRepository.findOne({ where: { id }, relations: ['users'] });
       console.log('Fetched circle by ID:', circle);
+      circle.userCount = circle.users.length; // 更新 userCount
       if (!circle) {
         this.ctx.status = 404;
         this.ctx.body = { success: false, message: 'Circle not found' };

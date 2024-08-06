@@ -76,14 +76,13 @@ AppDataSource.initialize().then(async () => {
       const circle = new Circle();
       circle.name = circleData.name;
       circle.isDefault = circleData.isDefault;
-      // circle.users = [users[2]] // 创建一个空的用户数组
       console.log('circle:', circle);
       await AppDataSource.manager.save(circle);
     }
     console.log('Initial circles have been saved');
   } catch (error) {
     console.error('Error saving initial circles:', error);
-  }
+  }  
   
   // 更新用户关注的圈子
   try {
