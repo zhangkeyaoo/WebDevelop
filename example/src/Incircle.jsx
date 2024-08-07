@@ -8,9 +8,12 @@ const Incircle = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [circle, setCircle] = useState({ name: '', isDefault: true, userCount: 0, id: 0 });
+    const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [userCount, setUserCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1); // 当前页码
+    const postsPerPage = 4; // 每页显示的帖子数量
 
     useEffect(() => {
         const fetchCircleDetails = async () => {
@@ -20,29 +23,52 @@ const Incircle = () => {
                 setCircle(response.data.data.circle);
                 setUserCount(response.data.data.circle.userCount);
             } catch (error) {
-                if (error.response) {
-                    // 请求已发出，但服务器响应了状态码不在 2xx 范围内
-                    console.error('Error fetching circle details:', error.response.data);
-                    setError(error.response.data.message || 'Error fetching circle details');
-                } else if (error.request) {
-                    // 请求已发出，但没有收到响应
-                    console.error('No response received:', error.request);
-                    setError('No response received from server');
-                } else {
-                    // 其他错误
-                    console.error('Error:', error.message);
-                    setError(error.message);
-                }
+                handleError(error);
             }
         };
 
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:7001/api/circles/${id}/posts`);
+                setPosts(response.data.data.posts);
+            } catch (error) {
+                handleError(error);
+            }
+        };
 
         fetchCircleDetails();
+        fetchPosts();
     }, [id]);
+
+    const handleError = (error) => {
+        if (error.response) {
+            setError(error.response.data.message || 'Error fetching data');
+        } else if (error.request) {
+            setError('No response received from server');
+        } else {
+            setError(error.message);
+        }
+    };
 
     console.log('circle:', circle);
     // setUserCount(circle.userCount);
     console.log('userCount:', userCount);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < Math.ceil(posts.length / postsPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
     if (error) {
         return <div>{error}</div>;
@@ -66,7 +92,7 @@ const Incircle = () => {
                 <span className='user-count'>成员数量: {userCount}</span>
                 <input className='search-article'
                     type="text"
-                    placeholder="搜索帖子"
+                    placeholder="搜索帖子标题"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -74,8 +100,26 @@ const Incircle = () => {
             </header>
             <h2 className="latest-posts-title">最新帖子</h2>
             <div className="posts-section">
-                
-                {/* 在这里添加帖子的内容 */}
+                <div className="posts-header">
+                    <span>标题</span>
+                    <span>发帖人</span>
+                    <span>预览</span>
+                </div>
+                {currentPosts.map(post => (
+                    <div key={post.id} className="post-item">
+                        <h3>{post.title}</h3>
+                        {/* <p>{post.content}</p> */}
+                        <p>发帖人: {post.user.username}</p>
+                        <p className="post-preview">预览: {post.content.slice(0, 15)}...</p> {/* 正文预览 */}
+                        <button className="view-button" onClick={() => navigate(`/post/${post.id}`)}>查看</button>
+                    </div>
+                ))}
+                <div className="pagination-article">
+                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>上一页</button>
+                    <span>第 {currentPage} 页</span>
+                    <button onClick={handleNextPage} disabled={currentPage === Math.ceil(posts.length / postsPerPage)}>下一页</button>
+
+                </div>
             </div>
             {/* 其他内容 */}
         </div>

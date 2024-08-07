@@ -40,19 +40,26 @@ const Post = () => {
             formData.append('circleId', id);
             formData.append('title', title);
             formData.append('content', content);
+            formData.append('userId', localStorage.getItem('userId')); //怎么找当前用户id
             images.forEach((image, index) => {
                 formData.append(`image${index}`, image.file);
             });
-
-            await axios.post(`http://127.0.0.1:7001/api/posts`, formData, {
+            Id: 1
+            const response = await axios.post('http://127.0.0.1:7001/api/postarticles', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                    'Content-Type': 'application/json'
+                }
             });
-            navigate(`/circle/${id}`);
+    
+            if (response.data.success) {
+                navigate(`/circle/${id}`);
+            } else {
+                console.error('Error creating post:', response.data.message);
+                alert('发帖失败');
+            }
         } catch (error) {
             console.error('Error creating post:', error);
-            alert('Error creating post');
+            alert('发帖失败');
         }
     };
 

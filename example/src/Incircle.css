@@ -106,8 +106,8 @@
 .posts-section {
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start; /* 左对齐 */
     width: 1200px;
     height: 460px;
     top:50px;
@@ -117,8 +117,75 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px; /* 内边距 */
-
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.posts-header {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+    padding: 10px;
+    padding-right: 35%;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.post-item {
+    display: flex;
+    justify-content: space-between; /* 在元素之间均匀分布空间 */
+    align-items: center; /* 垂直居中对齐 */
+    width: 99%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.799);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.view-button {
+    background-color: #f794a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.view-button:hover {
+    background-color: #d7aff4;
+    transform: scale(1.05);
+}
+
+.pagination-article {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 40px;
+}
+
+.pagination-article button {
+    background-color: #cda4ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination-article button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination-article button:hover {
+    background-color: #ae62ff;
+    transform: scale(0.9);
+}
+
+.pagination-article span {
+    margin: 0 10px;
+    font-size: 16px;
+}
 

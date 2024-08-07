@@ -4,12 +4,14 @@ import { AppDataSource } from '../db';
 import { Circle } from '../entity/circle';
 import { User } from '../entity/user';
 import { Repository } from 'typeorm';
+// import { PostArticle } from '../entity/post-article';
 
 @Provide()
 @Controller('/api')
 export class CircleController {
   private circleRepository: Repository<Circle>;
   private userRepository: Repository<User>;
+  // private postRepository: Repository<PostArticle>;
 
   @Inject()
   ctx: Context;
@@ -81,6 +83,8 @@ export class CircleController {
       const newCircle = new Circle();
       newCircle.name = body.name;
       newCircle.isDefault = body.isDefault;
+
+      
 
       const savedCircle = await this.circleRepository.save(newCircle);
       console.log('Created new circle:', savedCircle);
@@ -184,5 +188,29 @@ export class CircleController {
     }
   }
 
+  @Get('/circles/:id/posts')
+  async getCirclePosts(@Param('id') id: number) {
+    try {
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+      }
+      this.circleRepository = AppDataSource.getRepository(Circle);
+      // this.postRepository = AppDataSource.getRepository(PostArticle);
+
+      const circle = await this.circleRepository.findOne({ where: { id }, relations: ['posts', 'posts.user'] });
+      if (!circle) {
+        this.ctx.body = { success: false, message: 'Circle not found' };
+        this.ctx.status = 404;
+        return;
+      }
+
+      this.ctx.body = { success: true, data: { posts: circle.posts } };
+    } catch (error) {
+      console.error('Error fetching circle posts:', error);
+      this.ctx.body = { success: false, message: 'Internal Server Error' };
+      this.ctx.status = 500;
+    }
+  }
+  
 }
 

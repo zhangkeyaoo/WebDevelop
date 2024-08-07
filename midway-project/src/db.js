@@ -1,7 +1,7 @@
 const { DataSource } = require('typeorm');
 const { User } = require('./entity/user');
 const { Circle } = require('./entity/circle');
-const { Post } = require('./entity/post');
+const { PostArticle } = require('./entity/post-article');
 
 // 创建数据源
 const AppDataSource = new DataSource({
@@ -10,10 +10,10 @@ const AppDataSource = new DataSource({
   port: 3306,
   username: 'root',
   password: 'zky134679852zky',
-  database: 'web',
+  database: 'web',//web02新库可用
   synchronize: true,
   logging: false,
-  entities: [User, Circle, Post],
+  entities: [User, Circle, PostArticle],
   migrations: ["src/migration/**/*.js"],
   subscribers: ["src/subscriber/**/*.js"],
 });

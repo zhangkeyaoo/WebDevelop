@@ -1,7 +1,7 @@
-import { Provide, Controller, Post, Body, Inject } from '@midwayjs/decorator';
-import { Context } from '@midwayjs/web';
+import { Provide, Controller, Post, Body, Inject } from '@midwayjs/core';
+import { Context } from '@midwayjs/koa';
 import { Repository } from 'typeorm';
-import { Post as PostEntity } from '../entity/post';
+import { PostArticle } from '../entity/post-article';
 import { Circle } from '../entity/circle';
 import { User } from '../entity/user';
 import { AppDataSource } from '../db';
@@ -9,22 +9,25 @@ import { AppDataSource } from '../db';
 @Provide()
 @Controller('/api')
 export class PostController {
-  private postRepository: Repository<PostEntity>;
+  @Inject()
+  ctx: Context;
+  
+  private postRepository: Repository<PostArticle>;
   private circleRepository: Repository<Circle>;
   private userRepository: Repository<User>;
 
-  @Inject()
-  ctx: Context;
 
-  @Post('/posts')
+
+  @Post('/postarticles')
   async createPost(@Body() body) {
     try {
       if (!AppDataSource.isInitialized) {
         await AppDataSource.initialize();
       }
-      this.postRepository = AppDataSource.getRepository(PostEntity);
+      this.postRepository = AppDataSource.getRepository(PostArticle);
       this.circleRepository = AppDataSource.getRepository(Circle);
       this.userRepository = AppDataSource.getRepository(User);
+      console.log('Received request to create post:', body);
 
       const { title, content, images, circleId, userId } = body;
 
@@ -34,10 +37,11 @@ export class PostController {
       if (!circle || !user) {
         this.ctx.body = { success: false, message: 'Invalid circle or user' };
         this.ctx.status = 400;
+        console.log('Invalid circle or user');
         return;
       }
 
-      const newPost = new PostEntity();
+      const newPost = new PostArticle();
       newPost.title = title;
       newPost.content = content;
       newPost.images = images;

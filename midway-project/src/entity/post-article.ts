@@ -3,7 +3,7 @@ import { Circle } from './circle';
 import { User } from './user';
 
 @Entity()
-export class Post {
+export class PostArticle {
   @PrimaryGeneratedColumn()
   id: number;
 
