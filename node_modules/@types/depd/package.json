@@ -1,0 +1,32 @@
+{
+    "name": "@types/depd",
+    "version": "1.1.36",
+    "description": "TypeScript definitions for depd",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/depd",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Zhiyuan Wang",
+            "githubUsername": "danny8002",
+            "url": "https://github.com/danny8002"
+        },
+        {
+            "name": "BendingBender",
+            "githubUsername": "BendingBender",
+            "url": "https://github.com/BendingBender"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/depd"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "0991f757a08c85c7bfa75d08db641885423442c5ee00c32cfc118beea12bc877",
+    "typeScriptVersion": "4.5"
+}

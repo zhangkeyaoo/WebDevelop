@@ -1,6 +1,7 @@
 const { DataSource } = require('typeorm');
 const { User } = require('./entity/user');
 const { Circle } = require('./entity/circle');
+const { Post } = require('./entity/post');
 
 // 创建数据源
 const AppDataSource = new DataSource({
@@ -12,7 +13,7 @@ const AppDataSource = new DataSource({
   database: 'web',
   synchronize: true,
   logging: false,
-  entities: [User, Circle],
+  entities: [User, Circle, Post],
   migrations: ["src/migration/**/*.js"],
   subscribers: ["src/subscriber/**/*.js"],
 });

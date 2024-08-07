@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column,ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column,ManyToMany, JoinTable,OneToMany } from 'typeorm';
 import { Circle } from './circle';
+import { Post } from './post';
 
 @Entity()
 export class User {
@@ -19,4 +20,6 @@ export class User {
   @JoinTable()
   circles: Circle[];
   
+  @OneToMany(() => Post, post => post.user)
+  posts: Post[];
 }
