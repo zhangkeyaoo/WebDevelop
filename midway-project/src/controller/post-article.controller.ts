@@ -65,8 +65,8 @@ export class PostController {
       }
       this.postRepository = AppDataSource.getRepository(PostArticle);
 
-      const post = await this.postRepository.findOne({ where: { id: postId }, relations: ['user'] });
-
+      const post = await this.postRepository.findOne({ where: { id: postId }, relations: ['user','likedUsers'] });
+      console.log('1Post:', post);
       if (!post) {
         this.ctx.body = { success: false, message: 'Post not found' };
         this.ctx.status = 404;
@@ -98,7 +98,7 @@ export class PostController {
 
       // 假设评论内容保存在 post 的 comments 字段中
       post.comments = post.comments ? [...post.comments, body.content] : [body.content];
-
+      post.likeCount = post.likedUsers.length; // 点赞数加一
       const updatedPost = await this.postRepository.save(post);
       this.ctx.body = { success: true, data: updatedPost };
     } catch (error) {
@@ -126,15 +126,17 @@ export class PostController {
         this.ctx.status = 404;
         return;
       }
-
+      post.likeCount = post.likedUsers.length; // 点赞数加一
+      await this.postRepository.save(post);
       if (post.likedUsers.some(likedUser => likedUser.id === user.id)) {
-        this.ctx.body = { success: false, message: 'User has already liked this post' };
-        this.ctx.status = 400;
+        await this.postRepository.save(post);
+        this.ctx.body = { success: true, data: post };
         return;
       }
 
-      post.likeCount += 1; // 点赞数加一
+     
       post.likedUsers.push(user); // 添加点赞用户
+      post.likeCount = post.likedUsers.length; 
       await this.postRepository.save(post);
       this.ctx.body = { success: true, data: post};
     } catch (error) {

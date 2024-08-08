@@ -6,7 +6,6 @@ import backIcon from './assets/back.png';
 import likeIcon from './assets/like.png';
 import afterLikeIcon from './assets/afterlike.png';
 import commentIcon from './assets/comment.png';
-import { response } from 'express';
 
 const Article = () => {
     const { postId } = useParams();
@@ -27,9 +26,6 @@ const Article = () => {
                 if (response.data.data.post.likedUsers.some(user => user.id === parseInt(userId))) {
                     setLikeImg(afterLikeIcon);
                 }
-                // if (response.message === 'User has already liked this post') {
-                //     setLikeImg(afterLikeIcon);
-                // }
             } catch (error) {
                 handleError(error);
             }
@@ -56,6 +52,7 @@ const Article = () => {
                     ...prevPost,
                     ...response.data.data
                 })); // 更新 post 数据
+                console.log('response:', response.data.data);
                 setLikeImg(afterLikeIcon); // 点赞图片更换
             } else {
                 setError(response.data.message);
