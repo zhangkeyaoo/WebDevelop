@@ -6,6 +6,7 @@ import Userlogin from './Userlogin.jsx'
 import Circle from './Circle.jsx'
 import Incircle from './Incircle.jsx';
 import Post from './Post.jsx';
+import Article from './Article';
 import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/circle" element={< Circle />} />
         <Route path="/circle/:id" element={<Incircle />} />
         <Route path="/circle/:id/post" element={<Post />} />
+        <Route path="/post/:postId" element={<Article />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

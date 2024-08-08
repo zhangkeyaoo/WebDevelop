@@ -1,0 +1,169 @@
+
+
+.article-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('src/assets/article-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: -1;
+}
+
+/* .article-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+.article-header {
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff98;
+    color: #fff;
+    text-align: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; 
+    align-items: center;
+    display: flex;
+    height: 40px;
+}
+.back-button {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    top: 10px;
+    left: 10px;
+    position: fixed;
+    margin-right: 100px; /* 给返回按钮右侧添加一些间距 */
+}
+.postuser-name {
+    margin-right: auto;
+    margin-left: 10px;
+    position: fixed;
+    margin-left: 80px;
+    color: rgb(43, 38, 36);
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+    font-size: 24px;
+}
+
+.article-title {
+    font-size: 32px;
+    color: #333;
+    text-align: center; /* 居中对齐 */
+    position: fixed;
+    left: 30%;
+    top: 0;
+    font-family: "Font1", "Microsoft JhengHei", Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(228, 142, 105, 0.438); 
+}
+
+.article-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-height: 400px; /* 设置最大高度，超出部分可滚动 */
+    padding: 10px;
+}
+
+.article-image {
+    position: fixed;
+    max-width: 100%;
+    height: 300px;
+    width: 40%;
+    top: 100px;
+    left:20px;
+    margin-bottom: 20px;
+    background-color: aquamarine;
+}
+.content-container{
+    position: fixed;
+    width: 680px;
+    max-height: 500px; /* 设置最大高度，超出部分可滚动 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffdc;
+    border-radius: 8px;
+    left: 45%;
+    top: 100px;
+}
+.content {
+    width: 100%;
+    padding: 10px;
+}
+/* 左下角方框 */
+.interact-box {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; 
+    width: 160px;
+    height: 60px; 
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    display: flex;
+    justify-content: space-around; /* 图片之间的间距 */
+    align-items: center; /* 垂直居中 */
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.comment-img,
+.like-img {
+    max-width: 40px; 
+    max-height: 40px; 
+    border-radius: 4px; 
+    cursor: pointer;
+}
+.comment-img:hover,
+.like-img:hover {
+    transform: scale(1.1); 
+}
+
+.like-count{
+    font-size: 16px;
+    color: #333;
+    margin-left: 10px;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.comment-input{
+    position: fixed;
+    bottom: 30px;
+    left: 240px;
+    width: 240px;
+    height: 200px;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.handle-comment{
+    position: fixed;
+    bottom: 55px;
+    left: 490px;
+    background-color: #ffac5e;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.handle-comment:hover{
+    background-color: #ff8527;
+    transform: scale(0.9);
+}
+.cancel-comment {
+    position: fixed;
+    bottom: 10px;
+    left: 490px;
+    background-color: #ccc;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.cancel-comment:hover {
+    background-color: #aaa;
+    transform: scale(0.9);
+}

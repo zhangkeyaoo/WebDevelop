@@ -51,12 +51,12 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
-    margin-right: 10px; /* 给返回按钮右侧添加一些间距 */
+    margin-right: 10px; 
 }
 
 .circle-name {
     font-size: 36px;
-    margin: 0;
+    margin-left: 90px;
     font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
     width: 20%;
 }
