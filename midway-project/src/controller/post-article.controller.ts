@@ -34,6 +34,8 @@ export class PostController {
       const circle = await this.circleRepository.findOne({ where: { id: circleId } });
       const user = await this.userRepository.findOne({ where: { id: userId } });
 
+      console.log('image', images);
+
       if (!circle || !user) {
         this.ctx.body = { success: false, message: 'Invalid circle or user' };
         this.ctx.status = 400;

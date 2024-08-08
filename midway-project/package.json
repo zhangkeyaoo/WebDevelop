@@ -4,6 +4,7 @@
   "description": "",
   "private": true,
   "dependencies": {
+    "@koa/cors": "^5.0.0",
     "@midwayjs/bootstrap": "^3.12.0",
     "@midwayjs/core": "^3.16.2",
     "@midwayjs/cross-domain": "^3.16.6",
@@ -13,7 +14,9 @@
     "@midwayjs/validate": "^3.16.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "koa-body": "^6.0.1",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
     "@midwayjs/mock": "^3.12.0",

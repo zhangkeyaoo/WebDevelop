@@ -28,7 +28,17 @@ const Post = () => {
         const newImages = images.filter((_, i) => i !== index);
         setImages(newImages);
     };
-
+    const handleSubmmitImg = async (image,index) => {
+        const formImageData = new FormData();
+        formImageData.append('image', image.file);
+        const responseImage = await axios.post('http://localhost:3000/upload', formImageData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log("!",responseImage.data.fileUrl);
+        return responseImage.data.fileUrl;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title || !content) {
@@ -41,10 +51,25 @@ const Post = () => {
             formData.append('title', title);
             formData.append('content', content);
             formData.append('userId', localStorage.getItem('userId')); //怎么找当前用户id
-            images.forEach((image, index) => {
-                formData.append(`image${index}`, image.file);
-            });
-            Id: 1
+            
+            // images.forEach((image, index) => {
+            //     const imageUrl = handleSubmmitImg(image,index);
+            //     console.log("image2",imageUrl);
+            //     formData.append(`image${index}`,imageUrl);
+            // });
+            const imageUrls = await Promise.all(
+                images.map(async (image, index) => {
+                  return await handleSubmmitImg(image, index);
+                })
+              );
+        
+        
+              imageUrls.forEach((url, index) => {
+                formData.append(`images[${index}]`, url);
+              });
+              console.log("imageUrls",imageUrls);
+        
+            
             const response = await axios.post('http://127.0.0.1:7001/api/postarticles', formData, {
                 headers: {
                     'Content-Type': 'application/json'

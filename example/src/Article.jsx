@@ -110,7 +110,7 @@ const Article = () => {
                 <h1 className='article-title'>{post.title}</h1>
             </div>
             <div className="article-content">
-                <img src={post.imageUrl} alt="文章图片" className="article-image" />
+                <img src={post.images} alt="文章图片" className="article-image" />
                 <div className="content-container">
                     <div className="content">{post.content}</div>
                 </div>
