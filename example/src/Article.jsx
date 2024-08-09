@@ -6,6 +6,7 @@ import backIcon from './assets/back.png';
 import likeIcon from './assets/like.png';
 import afterLikeIcon from './assets/afterlike.png';
 import commentIcon from './assets/comment.png';
+import noPicture from './assets/no-picture.jpg'; // 当帖子没有图片时显示的默认图片
 
 const Article = () => {
     const { postId } = useParams();
@@ -16,6 +17,7 @@ const Article = () => {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
     const [userId, setUserId] = useState(localStorage.getItem('userId')); // 从 localStorage 中读取用户 ID
+    const [currentPage, setCurrentPage] = useState(0); // 当前图片页码
 
     useEffect(() => {
         const fetchPostDetails = async () => {
@@ -88,6 +90,18 @@ const Article = () => {
         setShowCommentBox(false); // 隐藏输入框
     };
 
+    const handleNextPage = () => {
+        if (currentPage < post.images.length - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     if (error) {
         return <div>{error}</div>;
     }
@@ -110,7 +124,17 @@ const Article = () => {
                 <h1 className='article-title'>{post.title}</h1>
             </div>
             <div className="article-content">
-                <img src={post.images} alt="文章图片" className="article-image" />
+            {post.images && post.images.length > 0 ? (
+                    <div className="image-pagination">
+                        <img src={post.images[currentPage]} alt={`文章图片 ${currentPage + 1}`} className="article-image" />
+                        <div className="pagination-controls">
+                            <button onClick={handlePrevPage} disabled={currentPage === 0}>上一页</button>
+                            <button onClick={handleNextPage} disabled={currentPage === post.images.length - 1}>下一页</button>
+                        </div>
+                    </div>
+                ) : (
+                    <img src={noPicture} alt="文章图片" className="article-image" />
+                )}
                 <div className="content-container">
                     <div className="content">{post.content}</div>
                 </div>

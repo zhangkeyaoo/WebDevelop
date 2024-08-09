@@ -78,13 +78,40 @@
 .article-image {
     position: fixed;
     max-width: 100%;
-    height: 300px;
-    width: 40%;
+    height: 320px;
+    width: auto;
     top: 100px;
     left:20px;
     margin-bottom: 20px;
-    background-color: aquamarine;
+    background-color: rgba(255, 255, 255, 0.564);
 }
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top:250px;
+}
+
+.pagination-controls button {
+    padding: 5px 10px;
+    height: 34px;
+    font-size: 16px;
+    background-color: #ffb766;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.pagination-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.pagination-controls button:hover {
+    background-color: #ff8d36;
+    transform: scale(0.9);
+}
+
+
 .content-container{
     position: fixed;
     width: 680px;
@@ -101,6 +128,8 @@
 .content {
     width: 100%;
     padding: 10px;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+    white-space: pre-wrap; /* 保留换行符和空白字符 */
 }
 /* 左下角方框 */
 .interact-box {
@@ -167,3 +196,4 @@
     background-color: #aaa;
     transform: scale(0.9);
 }
+

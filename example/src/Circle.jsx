@@ -198,6 +198,7 @@ const Circle = () => {
               <button onClick={handlePrevPage} disabled={currentPage === 1}>
                 上一页
               </button>
+              <span className="page-number">{currentPage}</span>
               <button onClick={handleNextPage} disabled={currentPage === Math.ceil(circles.length / circlesPerPage)}>
                 下一页
               </button>

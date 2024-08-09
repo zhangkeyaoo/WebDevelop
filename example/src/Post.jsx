@@ -13,8 +13,8 @@ const Post = () => {
     const [error, setError] = useState(null);
 
     const handleImageChange = (e) => {
-        if (e.target.files.length + images.length > 3) {
-            alert('最多只能上传三张图片');
+        if (e.target.files.length + images.length > 5) {
+            alert('最多只能上传五张图片');
             return;
         }
         const newImages = Array.from(e.target.files).map(file => ({
