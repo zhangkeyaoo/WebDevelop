@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column,ManyToMany, JoinTable,OneToMany 
 import { Circle } from './circle';
 import { PostArticle } from './post-article';
 import { Comment } from './comment';
+import { Activity } from './activity';
 
 @Entity()
 export class User {
@@ -26,4 +27,7 @@ export class User {
 
   @OneToMany(() => Comment, comment => comment.user)
   comments: Comment[];
+
+  @OneToMany(() => Activity, activity => activity.user) 
+  activities: Activity[]; 
 }

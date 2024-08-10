@@ -4,6 +4,7 @@ import { AppDataSource } from '../db';
 import { Circle } from '../entity/circle';
 import { User } from '../entity/user';
 import { Repository } from 'typeorm';
+import { Activity } from '../entity/activity';
 // import { PostArticle } from '../entity/post-article';
 
 @Provide()
@@ -84,7 +85,7 @@ export class CircleController {
       newCircle.name = body.name;
       newCircle.isDefault = body.isDefault;
 
-      
+
 
       const savedCircle = await this.circleRepository.save(newCircle);
       console.log('Created new circle:', savedCircle);
@@ -211,6 +212,28 @@ export class CircleController {
       this.ctx.status = 500;
     }
   }
+
+  @Get('/circles/:id/activity')
+  async getCircleActivity(@Param('id') id: number) {
+    try {
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+      }
+      const activityRepository = AppDataSource.getRepository(Activity);
+      const activities = await activityRepository.find({ where: { circle: { id } }, relations: ['user'] });
   
+      const activityData = activities.map(activity => ({
+        username: activity.user.username,
+        postCount: activity.postCount,
+        commentCount: activity.commentCount,
+      }));
+  
+      this.ctx.body = { success: true, data: activityData };
+    } catch (error) {
+      console.error('Error fetching circle activity:', error);
+      this.ctx.body = { success: false, message: 'Internal Server Error' };
+      this.ctx.status = 500;
+    }
+  }
 }
 

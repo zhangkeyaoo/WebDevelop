@@ -3,6 +3,7 @@ const { User } = require('./entity/user');
 const { Circle } = require('./entity/circle');
 const { PostArticle } = require('./entity/post-article');
 const { Comment } = require('./entity/comment');
+const { Activity } = require('./entity/activity');
 
 // 创建数据源
 const AppDataSource = new DataSource({
@@ -14,7 +15,7 @@ const AppDataSource = new DataSource({
   database: 'web',//web02新库可用
   synchronize: true,
   logging: false,
-  entities: [User, Circle, PostArticle,Comment],
+  entities: [User, Circle, PostArticle,Comment,Activity],
   migrations: ["src/migration/**/*.js"],
   subscribers: ["src/subscriber/**/*.js"],
 });
@@ -25,7 +26,7 @@ AppDataSource.initialize().then(async () => {
   const users = [
     { id: '1', username: 'Yao', password: 'zky134679852zky', avatar: 'default' },//用户1
     { id: '2', username: 'Dong', password: '123456', avatar: 'default' }, // 用户2
-    { id: '-1', username: 'admin', password: 'admin', avatar: 'default' }, // 管理员
+    { id: '3', username: 'Chuya', password: '123456', avatar: 'default' }, // 用户3
   ];
 
   // 保存新用户到数据库

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany,OneToMany } from 'typeorm';
 import { User } from './user';
 import { PostArticle } from './post-article';
+import { Activity } from './activity';
 
 @Entity()
 export class Circle {
@@ -21,4 +22,7 @@ export class Circle {
   
   @OneToMany(() => PostArticle, post => post.circle)
   posts: PostArticle[];
+
+  @OneToMany(() => Activity, activity => activity.user)
+  activities: Activity[];
 }

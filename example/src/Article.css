@@ -85,6 +85,7 @@
     margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.564);
 }
+
 .pagination-controls {
     display: flex;
     justify-content: space-between;
@@ -110,7 +111,6 @@
     background-color: #ff8d36;
     transform: scale(0.9);
 }
-
 
 .content-container{
     position: fixed;
@@ -166,90 +166,3 @@
     font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
 }
 
-.comment-window {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 420px;
-    height:560px;
-    background: url('/src/assets/comment-background.jpg') no-repeat center center;
-    background-size: cover;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.comment-window-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
-}
-
-.comment-window-header button{
-    cursor: pointer;
-    background-color: #ffb766;
-    color: #ffffff;
-    border: none;
-    padding: 10px;
-    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
-}
-.comment-window-header button:hover {
-    background-color: #e1a272;
-    transform: scale(0.9);
-}
-
-.comment-list {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    white-space: pre-wrap;
-}
-
-.comment-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.comment-input-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.comment-input {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
-    white-space: pre-wrap;
-}
-
-.handle-comment,
-.cancel-comment {
-    padding: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background-color: #ffb866e8;
-    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
-}
-.handle-comment:hover, 
-.cancel-comment:hover {
-    background-color: #e1a272e0;
-}
-.comment-button {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #ffb866d9;
-    color: #ffffff;
-    border: none;
-    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
-}
-.comment-button:hover {
-    background-color: #e8994f86;
-}

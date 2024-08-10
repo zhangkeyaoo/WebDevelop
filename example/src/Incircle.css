@@ -79,7 +79,7 @@
 }
 
 .post-button {
-    margin-right: 60px; 
+    margin-right: 30px; 
     margin-top: 10px;
     background-color: #ff913c;
     color: white;
@@ -91,6 +91,22 @@
 
 .post-button:hover {
     background-color: #ffc562;
+    transform: scale(0.9);
+}
+
+.activity-button {
+    margin-right: 30px; 
+    margin-top: 10px;
+    background-color: #57bcd2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.activity-button:hover {
+    background-color: #45a09b;
     transform: scale(0.9);
 }
 

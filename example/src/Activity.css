@@ -1,0 +1,42 @@
+.active-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 33%;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(255, 152, 34, 0.3);
+    z-index: 1000;
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+    font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.active-content {
+    padding: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.active-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.active-content th, .active-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.active-content th {
+    background-color: #ffb16dce;
+    font-weight: bold;
+}

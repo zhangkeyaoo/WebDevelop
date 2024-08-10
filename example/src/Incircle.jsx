@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Incircle.css';
+import Active from './Activity';
 import backIcon from './assets/back.png';
 
 const Incircle = () => {
@@ -14,6 +15,8 @@ const Incircle = () => {
     const [userCount, setUserCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1); // 当前页码
     const postsPerPage = 4; // 每页显示的帖子数量
+    const [showActive, setShowActive] = useState(false); // 控制 Active界面显示
+    const [activityData, setActivityData] = useState([]); // 活跃情况数据
 
     useEffect(() => {
         const fetchCircleDetails = async () => {
@@ -51,7 +54,6 @@ const Incircle = () => {
     };
 
     console.log('circle:', circle);
-    // setUserCount(circle.userCount);
     console.log('userCount:', userCount);
 
     const handlePreviousPage = () => {
@@ -69,6 +71,22 @@ const Incircle = () => {
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const fetchActivityData = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:7001/api/circles/${id}/activities`);
+            if (response.data.success) {
+                setActivityData(response.data.data);
+                console.log('activityData:', activityData);
+                setShowActive(true);
+            } else {
+                setError(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching activity data:', error);
+            setError('Error fetching activity data');
+        }
+    };
 
     if (error) {
         return <div>{error}</div>;
@@ -97,6 +115,7 @@ const Incircle = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button className="post-button" onClick={() => navigate(`/circle/${id}/post`)}>发帖</button>
+                <button className="activity-button" onClick={fetchActivityData}>成员活跃情况</button>
             </header>
             <h2 className="latest-posts-title">最新帖子</h2>
             <div className="posts-section">
@@ -121,7 +140,12 @@ const Incircle = () => {
 
                 </div>
             </div>
-            {/* 其他内容 */}
+            {showActive && (
+                <>
+                    {console.log('activityData:', activityData)}
+                    <Active data={activityData} onClose={() => setShowActive(false)} />
+                </>
+            )}
         </div>
     );
 };

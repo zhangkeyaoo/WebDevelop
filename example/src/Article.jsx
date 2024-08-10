@@ -73,28 +73,6 @@ const Article = () => {
         setShowCommentWindow(false); // 隐藏评论窗口
     };
 
-    // const handleCommentSubmit = async () => {
-    //     try {
-    //         const response = await axios.post(`http://127.0.0.1:7001/api/posts/${postId}/comments`, {
-    //             content: comment,
-    //         });
-    //         if (response.data.success) {
-    //             setComment(''); // 清空输入框
-    //             setShowCommentBox(false); // 隐藏输入框
-    //             // 这里可以添加刷新评论列表的逻辑
-    //         } else {
-    //             setError(response.data.message);
-    //         }
-    //     } catch (error) {
-    //         handleError(error);
-    //     }
-    // };
-
-    // const handleCommentCancel = () => {
-    //     setComment(''); // 清空输入框
-    //     setShowCommentBox(false); // 隐藏输入框
-    // };
-
     const handleNextPage = () => {
         if (currentPage < post.images.length - 1) {
             setCurrentPage(currentPage + 1);
@@ -149,18 +127,6 @@ const Article = () => {
                 <p className='like-count'>{post.likeCount}</p>
                 <img className='comment-img' src={commentIcon} alt="评论" onClick={handleCommentClick} />
             </div>
-            {/* {showCommentBox && (
-                <div className="comment-box">
-                    <textarea
-                        className='comment-input'
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="输入评论..."
-                    />
-                    <button className='handle-comment' onClick={handleCommentSubmit}>提交评论</button>
-                    <button className='cancel-comment' onClick={handleCommentCancel}>取消</button>
-                </div>
-            )} */}
             {showCommentWindow && (
                 <CommentWindow postId={postId} onClose={handleCommentWindowClose}userId={userId} username={username} />
             )}

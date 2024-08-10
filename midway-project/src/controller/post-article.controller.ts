@@ -1,9 +1,10 @@
-import { Provide, Controller, Post, Body, Inject,Get,Param } from '@midwayjs/core';
+import { Provide, Controller, Post, Body, Inject, Get, Param } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { Repository } from 'typeorm';
 import { PostArticle } from '../entity/post-article';
 import { Circle } from '../entity/circle';
 import { User } from '../entity/user';
+import { Activity } from '../entity/activity';
 import { AppDataSource } from '../db';
 
 @Provide()
@@ -11,12 +12,11 @@ import { AppDataSource } from '../db';
 export class PostController {
   @Inject()
   ctx: Context;
-  
+
   private postRepository: Repository<PostArticle>;
   private circleRepository: Repository<Circle>;
   private userRepository: Repository<User>;
-
-
+  private activityRepository: Repository<Activity>;
 
   @Post('/postarticles')
   async createPost(@Body() body) {
@@ -27,6 +27,8 @@ export class PostController {
       this.postRepository = AppDataSource.getRepository(PostArticle);
       this.circleRepository = AppDataSource.getRepository(Circle);
       this.userRepository = AppDataSource.getRepository(User);
+      this.activityRepository = AppDataSource.getRepository(Activity);
+
       console.log('Received request to create post:', body);
 
       const { title, content, images, circleId, userId } = body;
@@ -51,6 +53,19 @@ export class PostController {
       newPost.user = user;
 
       const savedPost = await this.postRepository.save(newPost);
+
+      // 查找或创建 Activity
+      let activity = await this.activityRepository.findOne({ where: { user: user, circle: circle } });
+      if (!activity) {
+        activity = new Activity();
+        activity.user = user;
+        activity.circle = circle;
+        activity.postCount = 0;
+        activity.commentCount = 0;
+      }
+      activity.postCount += 1;
+      await this.activityRepository.save(activity);
+      
       this.ctx.body = { success: true, data: savedPost };
     } catch (error) {
       console.error('Error creating post:', error);
@@ -67,7 +82,7 @@ export class PostController {
       }
       this.postRepository = AppDataSource.getRepository(PostArticle);
 
-      const post = await this.postRepository.findOne({ where: { id: postId }, relations: ['user','likedUsers'] });
+      const post = await this.postRepository.findOne({ where: { id: postId }, relations: ['user', 'likedUsers'] });
       console.log('1Post:', post);
       if (!post) {
         this.ctx.body = { success: false, message: 'Post not found' };
@@ -82,7 +97,7 @@ export class PostController {
       this.ctx.status = 500;
     }
   }
-  
+
   @Post('/posts/:postId/like')
   async likePost(@Param('postId') postId: number, @Body() body) {
     try {
@@ -109,11 +124,11 @@ export class PostController {
         return;
       }
 
-     
+
       post.likedUsers.push(user); // 添加点赞用户
-      post.likeCount = post.likedUsers.length; 
+      post.likeCount = post.likedUsers.length;
       await this.postRepository.save(post);
-      this.ctx.body = { success: true, data: post};
+      this.ctx.body = { success: true, data: post };
     } catch (error) {
       console.error('Error liking post:', error);
       this.ctx.body = { success: false, message: 'Internal Server Error' };
