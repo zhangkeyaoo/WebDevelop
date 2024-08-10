@@ -82,34 +82,7 @@ export class PostController {
       this.ctx.status = 500;
     }
   }
-  @Post('/posts/:postId/comments')
-  async addComment(@Param('postId') postId: number, @Body() body) {
-    try {
-      if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize();
-      }
-      this.postRepository = AppDataSource.getRepository(PostArticle);
-
-      const post = await this.postRepository.findOne({ where: { id: postId } });
-
-      if (!post) {
-        this.ctx.body = { success: false, message: 'Post not found' };
-        this.ctx.status = 404;
-        return;
-      }
-
-      // 假设评论内容保存在 post 的 comments 字段中
-      post.comments = post.comments ? [...post.comments, body.content] : [body.content];
-      post.likeCount = post.likedUsers.length; // 点赞数加一
-      const updatedPost = await this.postRepository.save(post);
-      this.ctx.body = { success: true, data: updatedPost };
-    } catch (error) {
-      console.error('Error adding comment:', error);
-      this.ctx.body = { success: false, message: 'Internal Server Error' };
-      this.ctx.status = 500;
-    }
-  }
-
+  
   @Post('/posts/:postId/like')
   async likePost(@Param('postId') postId: number, @Body() body) {
     try {

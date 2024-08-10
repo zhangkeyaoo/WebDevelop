@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import CommentWindow from './CommentWindow'; // 引入评论窗口
 import './Article.css';
 import backIcon from './assets/back.png';
 import likeIcon from './assets/like.png';
@@ -14,11 +15,11 @@ const Article = () => {
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
     const [likeImg, setLikeImg] = useState(likeIcon);
-    const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
-    const [userId, setUserId] = useState(localStorage.getItem('userId')); // 从 localStorage 中读取用户 ID
+    const [userId, setUserId] = useState(localStorage.getItem('userId')); // 从 localStorage 中读取用户ID
+    const [username, setUsername] = useState(localStorage.getItem('username')); // 从 localStorage 中读取用户名
     const [currentPage, setCurrentPage] = useState(0); // 当前图片页码
-
+    const [showCommentWindow, setShowCommentWindow] = useState(false); // 管理评论窗口的显示
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
@@ -34,7 +35,7 @@ const Article = () => {
         };
 
         fetchPostDetails();
-    }, [postId,userId]);
+    }, [postId, userId]);
 
     const handleError = (error) => {
         if (error.response) {
@@ -65,30 +66,34 @@ const Article = () => {
     };
 
     const handleCommentClick = () => {
-        setShowCommentBox(true); // 显示评论输入框
+        setShowCommentWindow(true); // 显示评论窗口
     };
 
-    const handleCommentSubmit = async () => {
-        try {
-            const response = await axios.post(`http://127.0.0.1:7001/api/posts/${postId}/comments`, {
-                content: comment,
-            });
-            if (response.data.success) {
-                setComment(''); // 清空输入框
-                setShowCommentBox(false); // 隐藏输入框
-                // 这里可以添加刷新评论列表的逻辑
-            } else {
-                setError(response.data.message);
-            }
-        } catch (error) {
-            handleError(error);
-        }
+    const handleCommentWindowClose = () => {
+        setShowCommentWindow(false); // 隐藏评论窗口
     };
 
-    const handleCommentCancel = () => {
-        setComment(''); // 清空输入框
-        setShowCommentBox(false); // 隐藏输入框
-    };
+    // const handleCommentSubmit = async () => {
+    //     try {
+    //         const response = await axios.post(`http://127.0.0.1:7001/api/posts/${postId}/comments`, {
+    //             content: comment,
+    //         });
+    //         if (response.data.success) {
+    //             setComment(''); // 清空输入框
+    //             setShowCommentBox(false); // 隐藏输入框
+    //             // 这里可以添加刷新评论列表的逻辑
+    //         } else {
+    //             setError(response.data.message);
+    //         }
+    //     } catch (error) {
+    //         handleError(error);
+    //     }
+    // };
+
+    // const handleCommentCancel = () => {
+    //     setComment(''); // 清空输入框
+    //     setShowCommentBox(false); // 隐藏输入框
+    // };
 
     const handleNextPage = () => {
         if (currentPage < post.images.length - 1) {
@@ -124,7 +129,7 @@ const Article = () => {
                 <h1 className='article-title'>{post.title}</h1>
             </div>
             <div className="article-content">
-            {post.images && post.images.length > 0 ? (
+                {post.images && post.images.length > 0 ? (
                     <div className="image-pagination">
                         <img src={post.images[currentPage]} alt={`文章图片 ${currentPage + 1}`} className="article-image" />
                         <div className="pagination-controls">
@@ -143,9 +148,8 @@ const Article = () => {
                 <img className='like-img' src={likeImg} alt="点赞" onClick={handleLikeClick} />
                 <p className='like-count'>{post.likeCount}</p>
                 <img className='comment-img' src={commentIcon} alt="评论" onClick={handleCommentClick} />
-                {/* <p className='comment-count'>{post.commentCount}</p> */}
             </div>
-            {showCommentBox && (
+            {/* {showCommentBox && (
                 <div className="comment-box">
                     <textarea
                         className='comment-input'
@@ -156,6 +160,9 @@ const Article = () => {
                     <button className='handle-comment' onClick={handleCommentSubmit}>提交评论</button>
                     <button className='cancel-comment' onClick={handleCommentCancel}>取消</button>
                 </div>
+            )} */}
+            {showCommentWindow && (
+                <CommentWindow postId={postId} onClose={handleCommentWindowClose}userId={userId} username={username} />
             )}
         </div>
     );

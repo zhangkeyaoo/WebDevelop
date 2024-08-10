@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,ManyToMany, JoinTable,OneToMany } from 'typeorm';
 import { Circle } from './circle';
 import { User } from './user';
+import { Comment } from './comment';
 
 @Entity()
 export class PostArticle {
@@ -16,10 +17,7 @@ export class PostArticle {
   @Column('simple-array', { nullable: true })
   images: string[];
 
-  @Column({ type: 'json', nullable: true })
-  comments: string[];
-
-  @Column({ default: 0 }) // 添加 likeCount 字段，默认值为 0
+  @Column({ default: 0 }) //likeCount默认值为 0
   likeCount: number;
 
   @ManyToOne(() => Circle, circle => circle.posts)
@@ -31,4 +29,7 @@ export class PostArticle {
   @ManyToMany(() => User)
   @JoinTable()
   likedUsers: User[];
+
+  @OneToMany(() => Comment, comment => comment.post)
+  comments: Comment[];
 }
