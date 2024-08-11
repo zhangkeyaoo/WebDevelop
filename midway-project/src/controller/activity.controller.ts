@@ -57,28 +57,34 @@ export class ActivityController {
       if (!AppDataSource.isInitialized) {
         await AppDataSource.initialize();
       }
-      console.log('activities');
+      console.log('Fetching activities for circleId:', circleId);
       this.activityRepository = AppDataSource.getRepository(Activity);
       this.circleRepository = AppDataSource.getRepository(Circle);
 
-      console.log(`Fetching activities for circleId: ${circleId}`); // 添加日志记录
-
       const circle = await this.circleRepository.findOne({ where: { id: circleId }, relations: ['activities', 'activities.user'] });
       console.log('circle', circle);    
+
       if (!circle) {
         console.error('Circle not found'); // 添加日志记录
         this.ctx.body = { success: false, message: 'Circle not found' };
         return;
       }
 
+      if (!circle.activities || circle.activities.length === 0) {
+        console.log('No activities found for this circle');
+        this.ctx.body = { success: true, data: [] };
+        return;
+      }
+  
       const activities = circle.activities.map(activity => ({
         username: activity.user.username,
         postCount: activity.postCount,
         commentCount: activity.commentCount,
-        // likeCount: activity.likeCount, // 如果需要
       }));
+      console.log('Mapped activities:', activities);
+
       await this.activityRepository.save(activities);
-      console.log('activities', activities);
+      console.log('Saved activities:', activities);
       this.ctx.body = { success: true, data: activities };
     } catch (error) {
       console.error('Error fetching circle activities:', error);

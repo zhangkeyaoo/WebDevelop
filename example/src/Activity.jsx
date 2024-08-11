@@ -7,7 +7,6 @@ const Active = ({ data, onClose }) => {
     const [error, setError] = useState(null);
     console.log('data:', data);
 
-
     return (
         <div className="active-container">
             <div className="active-content">

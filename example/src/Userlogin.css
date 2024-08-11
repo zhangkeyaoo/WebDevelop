@@ -171,3 +171,96 @@
   font-family: "Font1", "Microsoft JhengHei", Arial, sans-serif;
   font-size: 24px;
 }
+
+.register-button-style {
+  position:fixed;
+  left: 250px;
+  bottom: 70px;
+  width: 140px;
+  height: 60px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #ffc7a4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.register-button-style:hover {
+  transform: scale(0.9);
+}
+/* 注册界面 */
+.register-container {
+  position: fixed;
+  width: 33%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-left: 8px solid #b9bbdf;
+  border-radius: 0 30px 30px 0;
+  padding: 20px;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.register-header {
+  font-size: 30px;
+  margin-top: 20px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+  text-align: center;
+}
+
+.register-form {
+  margin-top: 40px;
+}
+
+.register-form .input-icon1,
+.register-form .input-icon2 {
+  left: 20px;
+}
+
+.register-form .userid,
+.register-form .password {
+  margin-left: 60px;
+  width: 70%;
+}
+
+.register-button1 {
+  text-align: center;
+  margin-top: 20px;
+}
+.register-button1-style {
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #ffaf72;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.register-button1-style:hover {
+  transform: scale(0.9);
+}
+.backtolog-button{
+  text-align: center;
+  margin-top: 20px;
+}
+.backtolog-button-style {
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #ffaf72;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: -10px;
+  font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
+}
+.backtolog-button-style:hover {
+  transform: scale(0.9);
+}

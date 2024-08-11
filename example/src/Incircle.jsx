@@ -75,6 +75,7 @@ const Incircle = () => {
     const fetchActivityData = async () => {
         try {
             const response = await axios.get(`http://127.0.0.1:7001/api/circles/${id}/activities`);
+            console.log('API response:', response.data); // 添加日志
             if (response.data.success) {
                 setActivityData(response.data.data);
                 console.log('activityData:', activityData);

@@ -38,4 +38,31 @@ export class LoginController {
     // 登录成功
     this.ctx.body = { success: true, message: 'Login successful', user,userID:user.id,username:user.username };
   }
+
+  @Post('/register')
+  async register(@Body() body: any) {
+    const { userId, username, password } = body;
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    this.userRepository = AppDataSource.getRepository(User);
+
+    // 检查用户是否已存在
+    const existingUser = await this.userRepository.findOneBy({ id: userId });
+    if (existingUser) {
+      this.ctx.status = 400;
+      this.ctx.body = { success: false, message: 'User already exists' };
+      return;
+    }
+
+    // 创建新用户
+    const newUser = new User();
+    newUser.id = userId;
+    newUser.username = username;
+    newUser.password = password;
+    await this.userRepository.save(newUser);
+
+    // 注册成功
+    this.ctx.body = { success: true, message: 'Registration successful' };
+  }
 }
