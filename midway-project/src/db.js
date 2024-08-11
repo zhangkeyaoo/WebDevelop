@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
   port: 3306,
   username: 'root',
   password: 'zky134679852zky',
-  database: 'web',//web02新库可用
+  database: 'web02',
   synchronize: true,
   logging: false,
   entities: [User, Circle, PostArticle,Comment,Activity],
@@ -24,7 +24,7 @@ const AppDataSource = new DataSource({
 AppDataSource.initialize().then(async () => {
   // 创建新用户实例
   const users = [
-    { id: '1', username: 'Yao', password: 'zky134679852zky', avatar: 'default' },//用户1
+    { id: '1', username: 'Yao', password: '123456', avatar: 'default' },//用户1
     { id: '2', username: 'Dong', password: '123456', avatar: 'default' }, // 用户2
     { id: '3', username: 'Chuya', password: '123456', avatar: 'default' }, // 用户3
   ];
@@ -88,31 +88,31 @@ AppDataSource.initialize().then(async () => {
   }  
   
   // 更新用户关注的圈子
-  try {
-    const user1 = await AppDataSource.manager.findOne(User, { where: { id: '1' }, relations: ['circles'] });
-    const user2 = await AppDataSource.manager.findOne(User, { where: { id: '2' }, relations: ['circles'] });
+  // try {
+  //   const user1 = await AppDataSource.manager.findOne(User, { where: { id: '1' }, relations: ['circles'] });
+  //   const user2 = await AppDataSource.manager.findOne(User, { where: { id: '2' }, relations: ['circles'] });
 
-    const circle1 = await AppDataSource.manager.findOne(Circle, { where: { name: '运动圈' } });
-    const circle2 = await AppDataSource.manager.findOne(Circle, { where: { name: '萌宠圈' } });
+  //   const circle1 = await AppDataSource.manager.findOne(Circle, { where: { name: '运动圈' } });
+  //   const circle2 = await AppDataSource.manager.findOne(Circle, { where: { name: '萌宠圈' } });
 
-    if (user1 && circle1) {
-      user1.circles = [circle1];
-      circle1.users = [user1];
-      await AppDataSource.manager.save(circle1);
-      await AppDataSource.manager.save(user1);
-    }
+  //   if (user1 && circle1) {
+  //     user1.circles = [circle1];
+  //     circle1.users = [user1];
+  //     await AppDataSource.manager.save(circle1);
+  //     await AppDataSource.manager.save(user1);
+  //   }
 
-    if (user2 && circle2) {
-      user2.circles = [circle2];
-      circle2.users = [user2];
-      await AppDataSource.manager.save(circle2);
-      await AppDataSource.manager.save(user2);
-    }
+  //   if (user2 && circle2) {
+  //     user2.circles = [circle2];
+  //     circle2.users = [user2];
+  //     await AppDataSource.manager.save(circle2);
+  //     await AppDataSource.manager.save(user2);
+  //   }
 
-    console.log('Users have been updated with their circles');
-  } catch (error) {
-    console.error('Error updating users with circles:', error);
-  }
+  //   console.log('Users have been updated with their circles');
+  // } catch (error) {
+  //   console.error('Error updating users with circles:', error);
+  // }
 
 
 }).catch(error => console.error('Error during Data Source initialization:', error));

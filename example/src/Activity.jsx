@@ -7,6 +7,8 @@ const Active = ({ data, onClose }) => {
     const [error, setError] = useState(null);
     console.log('data:', data);
 
+
+
     return (
         <div className="active-container">
             <div className="active-content">
@@ -21,7 +23,6 @@ const Active = ({ data, onClose }) => {
                                 <th>用户名</th>
                                 <th>发帖数</th>
                                 <th>评论数</th>
-                                {/* <th>点赞数</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +31,6 @@ const Active = ({ data, onClose }) => {
                                     <td>{activity.username}</td>
                                     <td>{activity.postCount}</td>
                                     <td>{activity.commentCount}</td>
-                                    {/* <td>{activity.likeCount}</td> */}
                                 </tr>
                             ))}
                         </tbody>

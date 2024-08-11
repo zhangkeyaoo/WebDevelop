@@ -15,7 +15,7 @@ export class Circle {
   isDefault: boolean = false;
 
   @Column({ default: 0 })
-  userCount: number = 0;
+  userCount: number;
 
   @ManyToMany(() => User, user => user.circles)
   users: User[];

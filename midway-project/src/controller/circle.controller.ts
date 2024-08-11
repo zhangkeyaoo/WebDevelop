@@ -121,6 +121,14 @@ export class CircleController {
       await this.circleRepository.save(circle); // 保存更新后的 circle
       circle.userCount = circle.users.length; // 更新 userCount
 
+      const activityRepository = AppDataSource.getRepository(Activity);
+        const activity = new Activity();
+        activity.user = user;
+        activity.circle = circle;
+        activity.postCount = 0;
+        activity.commentCount = 0;
+        await activityRepository.save(activity);
+
       this.ctx.body = { success: true, message: 'Circle followed successfully' };
     } catch (error) {
       console.error('Error following circle:', error);
@@ -221,13 +229,13 @@ export class CircleController {
       }
       const activityRepository = AppDataSource.getRepository(Activity);
       const activities = await activityRepository.find({ where: { circle: { id } }, relations: ['user'] });
-  
+
       const activityData = activities.map(activity => ({
         username: activity.user.username,
         postCount: activity.postCount,
         commentCount: activity.commentCount,
       }));
-  
+
       this.ctx.body = { success: true, data: activityData };
     } catch (error) {
       console.error('Error fetching circle activity:', error);

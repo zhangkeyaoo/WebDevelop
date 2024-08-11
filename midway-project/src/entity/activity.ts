@@ -13,12 +13,10 @@ export class Activity {
   @ManyToOne(() => Circle, circle => circle.activities)
   circle: Circle;
 
-  @Column()
+  @Column({default: 0})
   postCount: number;
 
-  @Column()
+  @Column({default: 0})
   commentCount: number;
 
-//   @Column()
-//   likeCount: number;
 }

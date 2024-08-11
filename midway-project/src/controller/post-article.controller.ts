@@ -5,6 +5,7 @@ import { PostArticle } from '../entity/post-article';
 import { Circle } from '../entity/circle';
 import { User } from '../entity/user';
 import { Activity } from '../entity/activity';
+// import { ActivityController } from './activity.controller';
 import { AppDataSource } from '../db';
 
 @Provide()
@@ -35,6 +36,7 @@ export class PostController {
 
       const circle = await this.circleRepository.findOne({ where: { id: circleId } });
       const user = await this.userRepository.findOne({ where: { id: userId } });
+      const activitiy = await this.activityRepository.findOne({ where: { user: user, circle: circle } });
 
       console.log('image', images);
 
@@ -51,20 +53,13 @@ export class PostController {
       newPost.images = images;
       newPost.circle = circle;
       newPost.user = user;
-
+  
       const savedPost = await this.postRepository.save(newPost);
-
-      // 查找或创建 Activity
-      let activity = await this.activityRepository.findOne({ where: { user: user, circle: circle } });
-      if (!activity) {
-        activity = new Activity();
-        activity.user = user;
-        activity.circle = circle;
-        activity.postCount = 0;
-        activity.commentCount = 0;
-      }
-      activity.postCount += 1;
-      await this.activityRepository.save(activity);
+      activitiy.postCount += 1;
+      await this.activityRepository.save(activitiy);
+    //   // 调用 addActivity 方法
+    // const activityController = new ActivityController();
+    // await activityController.addActivity({ userId, circleId, postCount: 1 });
       
       this.ctx.body = { success: true, data: savedPost };
     } catch (error) {

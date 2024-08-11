@@ -70,7 +70,11 @@ function Userlogin() {
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            window.alert('注册失败TAT');
+            if (error.response && error.response.data && error.response.data.message === 'User already exists') {
+                window.alert('此用户ID已经存在TAT请重新输入');
+            } else {
+                window.alert('注册失败TAT');
+            }
         }
     };
 

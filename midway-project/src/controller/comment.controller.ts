@@ -6,6 +6,7 @@ import { User } from '../entity/user';
 import { PostArticle } from '../entity/post-article';
 import { Activity } from '../entity/activity';
 import { AppDataSource } from '../db';
+// import { ActivityController } from './activity.controller';
 
 @Provide()
 @Controller('/api')
@@ -27,10 +28,13 @@ export class CommentController {
       this.commentRepository = AppDataSource.getRepository(Comment);
       this.userRepository = AppDataSource.getRepository(User);
       this.postRepository = AppDataSource.getRepository(PostArticle);
+      // this.activityRepository = AppDataSource.getRepository(Activity);
       this.activityRepository = AppDataSource.getRepository(Activity);
+
 
       const post = await this.postRepository.findOne({ where: { id: postId } });
       const user = await this.userRepository.findOne({ where: { id: body.userId } });
+      const activity = await this.activityRepository.findOne({ where: { user: user, circle: post.circle } });
 
       if (!post || !user) {
         this.ctx.body = { success: false, message: 'Post or User not found' };
@@ -42,19 +46,14 @@ export class CommentController {
       newComment.user = user;
       newComment.post = post;
 
-      await this.commentRepository.save(newComment);
-
-      // 查找或创建 Activity
-      let activity = await this.activityRepository.findOne({ where: { user: user, circle: post.circle } });
-      if (!activity) {
-        activity = new Activity();
-        activity.user = user;
-        activity.circle = post.circle;
-        activity.postCount = 0;
-        activity.commentCount = 0;
-      }
       activity.commentCount += 1;
+
+      await this.commentRepository.save(newComment);
       await this.activityRepository.save(activity);
+
+//  // 调用 addActivity 方法
+//  const activityController = new ActivityController();
+//  await activityController.addActivity({ userId: body.userId, circleId: post.circle.id, commentCount: 1 });
 
       const savedComment = await this.commentRepository.findOne({
         where: { id: newComment.id },
