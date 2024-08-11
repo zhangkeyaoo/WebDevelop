@@ -35,9 +35,6 @@ router.post('/upload', koaBody(), async (ctx) => {
     const file = ctx.request.files; // 获取上传的文件
     console.log('File:', file); // 打印文件信息
     if (file) {
-        
-        // const fileName = path.basename(file.path);
-        // const fileUrl = `${ctx.origin}/${fileName}`;
         const fileUrl = `${ctx.origin}/${file.image.newFilename}`;
         console.log('File URL:', fileUrl); // 打印文件 URL
 
@@ -56,7 +53,6 @@ router.post('/upload', koaBody(), async (ctx) => {
 
 // 使用路由
 app.use(router.routes()).use(router.allowedMethods());
-
 
 // 启动服务器
 const port = 3000;
