@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Inject , Provide} from '@midwayjs/core';
+import { Controller, Post, Body, Inject , Provide,Put} from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { AppDataSource } from '../db';
 import { User } from '../entity/user';
@@ -64,5 +64,26 @@ export class LoginController {
 
     // 注册成功
     this.ctx.body = { success: true, message: 'Registration successful' };
+  }
+
+  @Put('/updateUsername')
+  async updateUsername(@Body() body: any) {
+    const { userId, newUsername } = body;
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    this.userRepository = AppDataSource.getRepository(User);
+
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      this.ctx.status = 404;
+      this.ctx.body = { success: false, message: 'User not found' };
+      return;
+    }
+
+    user.username = newUsername;
+    await this.userRepository.save(user);
+
+    this.ctx.body = { success: true, message: 'Username updated successfully', username: user.username };
   }
 }

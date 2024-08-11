@@ -10,6 +10,7 @@ const Incircle = () => {
     const navigate = useNavigate();
     const [circle, setCircle] = useState({ name: '', isDefault: true, userCount: 0, id: 0 });
     const [posts, setPosts] = useState([]);
+    const [filteredPosts, setFilteredPosts] = useState([]); // 
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [userCount, setUserCount] = useState(0);
@@ -34,6 +35,7 @@ const Incircle = () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:7001/api/circles/${id}/posts`);
                 setPosts(response.data.data.posts);
+                setFilteredPosts(response.data.data.posts); // 初始化时设置过滤后的帖子
             } catch (error) {
                 handleError(error);
             }
@@ -42,6 +44,12 @@ const Incircle = () => {
         fetchCircleDetails();
         fetchPosts();
     }, [id]);
+
+    useEffect(() => {
+        // 由搜索词过滤帖子
+        const filtered = posts.filter(post => post.title.includes(searchTerm));
+        setFilteredPosts(filtered);
+    }, [searchTerm, posts]);
 
     const handleError = (error) => {
         if (error.response) {
@@ -70,7 +78,7 @@ const Incircle = () => {
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     const fetchActivityData = async () => {
         try {
@@ -128,7 +136,6 @@ const Incircle = () => {
                 {currentPosts.map(post => (
                     <div key={post.id} className="post-item">
                         <h3>{post.title}</h3>
-                        {/* <p>{post.content}</p> */}
                         <p>发帖人: {post.user.username}</p>
                         <p className="post-preview">预览: {post.content.slice(0, 15)}...</p> {/* 正文预览 */}
                         <button className="view-button" onClick={() => navigate(`/post/${post.id}`)}>查看</button>
@@ -137,7 +144,7 @@ const Incircle = () => {
                 <div className="pagination-article">
                     <button onClick={handlePreviousPage} disabled={currentPage === 1}>上一页</button>
                     <span>第 {currentPage} 页</span>
-                    <button onClick={handleNextPage} disabled={currentPage === Math.ceil(posts.length / postsPerPage)}>下一页</button>
+                    <button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredPosts.length / postsPerPage)}>下一页</button>
 
                 </div>
             </div>

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import React from "react"
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -31,7 +32,24 @@ function App() {
   const handleNicknameChange = (e) => {
     setUsername(e.target.value);
   };
-  const toggleEditing = () => {
+  const toggleEditing = async () => {
+    if (isEditing) {
+      try {
+        const response = await axios.put('http://127.0.0.1:7001/api/updateUsername', {
+          userId: userID,
+          newUsername: username,
+        });
+        if (response.data.success) {
+          localStorage.setItem('username', username);
+          alert('用户名更新成功');
+        } else {
+          alert('用户名更新失败');
+        }
+      } catch (error) {
+        console.error('Error updating username:', error);
+        alert('用户名更新失败');
+      }
+    }
     setIsEditing(!isEditing);
   };
 
@@ -51,14 +69,11 @@ function App() {
     }
   };
 
-  // 跳转到个人主页
-  const goToHomePage = () => {
-    navigate('/home')
-  }
-  // 跳转到消息页面
-  const goToMessagesPage = () => {
-    navigate('/messages')
-  }
+  // // 跳转到消息页面
+  // const goToMessagesPage = () => {
+  //   navigate('/messages')
+  // }
+
   // 跳转到圈子页面
   const goToCirclePage = () => {
     navigate('/circle')
@@ -75,11 +90,6 @@ function App() {
         <nav className="app-navbar">
           <button>热门新鲜事</button>
           <button onClick={goToCirclePage}>我的圈子</button>
-          <input
-            type="text"
-            placeholder="搜索感兴趣的内容"
-            className="app-search-input"
-          />
           <button onClick={() => {
             if (window.confirm('确定要退出登录吗QAQ?')) {
               goToLoginPage();
@@ -112,7 +122,7 @@ function App() {
             />
           </div>
           <div className='user-id'>
-            <p>ID: {userID}</p> {/* 显示用户ID */}
+            <p>ID: {userID}</p> 
           </div>
           {isEditing && (
             <input type="text"
@@ -122,10 +132,10 @@ function App() {
               autoFocus
             />
           )}
-          <div className='user-info-button'>
-            <button onClick={goToHomePage}>主页</button>
+          {/* <div className='user-info-button'>
+
             <button onClick={goToMessagesPage}>消息</button>
-          </div>
+          </div> */}
         </div>
       </nav>
     </>
