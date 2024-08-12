@@ -87,24 +87,24 @@ export class LoginController {
     this.ctx.body = { success: true, message: 'Username updated successfully', username: user.username };
   }
 
-  @Put('/updateAvatar')
-  async updateAvatar(@Body() body: any) {
-    const { userId, newAvatarUrl } = body;
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-    this.userRepository = AppDataSource.getRepository(User);
-
-    const user = await this.userRepository.findOneBy({ id: userId });
-    if (!user) {
-      this.ctx.status = 404;
-      this.ctx.body = { success: false, message: 'User not found' };
-      return;
-    }
-
-    user.avatar = newAvatarUrl;
-    await this.userRepository.save(user);
-
-    this.ctx.body = { success: true, message: 'Avatar updated successfully', avatar: user.avatar };
-  }
+  // @Put('/updateAvatar')
+  // async updateAvatar(@Body() body: any) {
+  //   const { userId, newAvatarUrl } = body;
+  //   if (!AppDataSource.isInitialized) {
+  //     await AppDataSource.initialize();
+  //   }
+  //   this.userRepository = AppDataSource.getRepository(User);
+  
+  //   const user = await this.userRepository.findOneBy({ id: userId });
+  //   if (!user) {
+  //     this.ctx.status = 404;
+  //     this.ctx.body = { success: false, message: 'User not found' };
+  //     return;
+  //   }
+  
+  //   user.avatar = newAvatarUrl;
+  //   await this.userRepository.save(user);
+  
+  //   this.ctx.body = { success: true, message: 'Avatar updated successfully', avatar: user.avatar };
+  // }
 }
