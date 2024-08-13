@@ -86,7 +86,7 @@ function Userlogin() {
                     <div className="bordered-div">
                         <h1 className="head">(◦˙▽˙◦)</h1>
                         <div className="login-id">
-                            <img src="src/assets/login/username.png" alt="User Icon" className="input-icon1" />
+                            <img src="src/assets/username.png" alt="User Icon" className="input-icon1" />
                             <input
                                 type="text"
                                 className="userid"
@@ -95,7 +95,7 @@ function Userlogin() {
                                 onChange={(e) => setUserId(e.target.value)} />
                         </div>
                         <div className="login-password">
-                            <img src="src/assets/login/password.png" alt="User Icon" className="input-icon2" />
+                            <img src="src/assets/password.png" alt="User Icon" className="input-icon2" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 className="password"

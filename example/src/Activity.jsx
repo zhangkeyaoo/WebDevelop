@@ -3,11 +3,8 @@ import axios from 'axios';
 import './Activity.css';
 
 const Active = ({ data, onClose }) => {
-    // const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     console.log('data:', data);
-
-
 
     return (
         <div className="active-container">

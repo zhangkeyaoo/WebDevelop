@@ -52,17 +52,11 @@ const Post = () => {
             formData.append('content', content);
             formData.append('userId', localStorage.getItem('userId')); //怎么找当前用户id
             
-            // images.forEach((image, index) => {
-            //     const imageUrl = handleSubmmitImg(image,index);
-            //     console.log("image2",imageUrl);
-            //     formData.append(`image${index}`,imageUrl);
-            // });
             const imageUrls = await Promise.all(
                 images.map(async (image, index) => {
                   return await handleSubmmitImg(image, index);
                 })
               );
-        
         
               imageUrls.forEach((url, index) => {
                 formData.append(`images[${index}]`, url);

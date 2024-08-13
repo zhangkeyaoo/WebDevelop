@@ -3,11 +3,11 @@ import './Head.css'
 import React, { Component } from "react"
 
 const images = [  
-    'src/assets/begin/1.jpg',  
-    'src/assets/begin/2.jpg',  
-    'src/assets/begin/3.jpg',  
-    'src/assets/begin/4.jpg',  
-    'src/assets/begin/5.jpg'  
+    'src/assets/1.jpg',  
+    'src/assets/2.jpg',  
+    'src/assets/3.jpg',  
+    'src/assets/4.jpg',  
+    'src/assets/5.jpg'  
 ];
 
 function Head() {

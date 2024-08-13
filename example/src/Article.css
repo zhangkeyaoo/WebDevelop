@@ -1,26 +1,17 @@
-
-
 .article-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('src/assets/article-background.jpg');
+    background-image: url('/src/assets/article-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     z-index: -1;
 }
 
-/* .article-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
+
 .article-header {
     width: 100%;
     padding: 20px;

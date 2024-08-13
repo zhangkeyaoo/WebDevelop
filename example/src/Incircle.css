@@ -1,20 +1,20 @@
 @font-face {
     font-family: 'Font1';
-    src: url('src/assets/font/font1.ttf');
+    src: url('./assets/font1.ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Font2';
-    src: url('src/assets/font/font2.ttf');
+    src: url('./assets/font2.ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Font3';
-    src: url('src/assets/font/font3.ttf');
+    src: url('./assets/font3.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -25,7 +25,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('src/assets/incircle-background.jpg');
+    background-image: url('./assets/incircle-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -76,7 +76,7 @@
     border-radius: 4px;
     font-family: "Font3", "Microsoft JhengHei", Arial, sans-serif;
     margin-left: 10px;
-    background-image: url('src/assets/search.png');
+    background-image: url('./assets/search.png');
     background-repeat: no-repeat;
     background-size: 20px;
     background-position: 95%, 50%;
