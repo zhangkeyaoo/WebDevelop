@@ -35,19 +35,6 @@ npm install
 npm run dev  # 开发模式
 ```
 
-## 项目结构
-```
-WebDevelopBackend/
-├── src/               # 后端源码
-│   ├── controller    # API接口
-│   └── entity        # 数据库模型
-
-WebDevelopFrontend/
-├── src/
-│   ├── components    # 公共组件
-│   └── pages         # 页面组件
-```
-
 ## 注意事项
 1. 首次使用需配置数据库连接（修改WebDevelopBackend/.env文件）
 2. 发帖前必须加入对应兴趣圈
